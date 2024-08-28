@@ -40,7 +40,7 @@
     padding: 40px;
     width: 100%;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-    height: 80vh;
+    height: 88vh;
 }
 
 
@@ -90,6 +90,11 @@
     transition: background-color 0.3s ease;
 }
 
+.back-signup {
+    margin: 10px;
+    padding: 12px 24px;
+}
+
 
 .auth-message-container button {
     padding: 12px 24px;
@@ -119,7 +124,7 @@
     width: 80%;
     align-items: center;
     justify-content: center;
-    margin: 20px;
+    margin-top: 20px;
 }
 
 
@@ -165,3 +170,102 @@
     cursor: pointer;
 }
 
+
+.forgot-password-link {
+    margin: 0;
+}
+
+
+
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+    }
+    
+
+    .auth-message-container,
+    .auth-form-container,
+    .auth-message-container-signin {
+        width: 87%;
+        padding: 20px;
+        height: 50%;
+    }
+
+
+    .auth-message-container-signin{
+        border-radius: 0 0 150px 150px;
+    }
+
+
+    .auth-message-container {
+        border-radius: 150px 150px 0 0;
+    }
+
+
+    .auth-form-container h2,
+    .auth-message-container h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+
+    .auth-form-container input,
+    .auth-form-container button,
+    .auth-message-container button {
+        width: 80%;
+        margin-bottom: 15px;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+
+    .auth-icons {
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+
+    .auth-icons svg {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+
+@media (max-width: 790px) {
+    
+    .auth-message-container {
+        border-radius: 150px 150px 0 0;
+    }
+}
+
+@media (max-width: 488px) {
+    .auth-form-container h2,
+    .auth-message-container h2 {
+        font-size: 20px;
+    }
+
+
+    .auth-message-container-signin {
+        border-radius: 0 0 150px 150px;
+    }
+
+
+    .auth-message-container {
+        border-radius: 150px 150px 0 0;
+    }
+
+
+    .auth-form-container input,
+    .auth-form-container button,
+    .auth-message-container button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+
+    .auth-icons svg {
+        width: 20px;
+        height: 20px;
+    }
+}

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './Signup.css'
 import { Link, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../../firebase/firebase';
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
 
@@ -32,6 +32,19 @@ export default function Signup() {
     };
 
 
+    // Handle sign in with Google
+    const handleGoogleSignup = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            await signInWithPopup(auth, provider);
+            navigate("/");
+        } catch (error) {
+            console.error("Error with Google signup:", error.message);
+            alert(error.message);
+        }
+    };
+
+
     return (
         <div className="auth-container">
             <div className="auth-form-container">
@@ -39,7 +52,7 @@ export default function Signup() {
                 <h2>Sign Up</h2>
 
                 <div className="auth-icons">
-                    <FaGoogle />
+                    <FaGoogle onClick={handleGoogleSignup}/>
                     <FaFacebook />
                     <FaTwitter />
                 </div>

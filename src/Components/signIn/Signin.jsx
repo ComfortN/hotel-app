@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
 import { auth } from '../../firebase/firebase';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 export default function Signin() {
 
@@ -11,7 +11,7 @@ export default function Signin() {
   const navigate = useNavigate();
 
 
-  // Function to handle signup form submission
+  // Function to handle signin form submission
   const handleSignin = async (e) => {
     e.preventDefault();
 
@@ -23,6 +23,19 @@ export default function Signin() {
       alert(error.message);
     }
   };
+
+
+  // Handle sign in with Google
+  const handleGoogleSignin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+        await signInWithPopup(auth, provider);
+        navigate("/");
+    } catch (error) {
+        console.error("Error with Google signin:", error.message);
+        alert(error.message);
+    }
+};
 
 
   return (
@@ -45,7 +58,7 @@ export default function Signin() {
         <h2>Sign In</h2>
 
         <div className="auth-icons">
-          <FaGoogle />
+          <FaGoogle onClick={handleGoogleSignin}/>
           <FaFacebook />
           <FaTwitter />
         </div>
@@ -55,6 +68,10 @@ export default function Signin() {
           <input type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
           <button type="submit">Sign In</button>
         </form>
+
+        <Link to="/forgot-password">
+          <p className="forgot-password-link">Forgot Password?</p>
+        </Link>
 
       </div>
 
