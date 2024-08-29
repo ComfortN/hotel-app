@@ -1,0 +1,53 @@
+.why-choose-us {
+    padding: 50px 0;
+    background-color: #2f343b;
+    color: #fff;
+}
+
+.why-choose-us h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #fff;
+}
+
+.why-choose-us-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    flex: 1;
+}
+
+.feature {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    padding: 20px;
+    background-color: #3a3f47;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.feature:hover {
+    transform: scale(1.05);
+    background-color: #4b525b;
+}
+
+.feature-icon {
+    font-size: 2em;
+    color: white;
+}
+
+.why-choose-us-img {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.why-choose-us-img img {
+    max-width: 100%;
+}
