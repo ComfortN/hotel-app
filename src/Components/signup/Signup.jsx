@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../../firebase/firebase';
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/userSlice';
 
 
 export default function Signup() {
@@ -11,6 +13,7 @@ export default function Signup() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
     // Function to handle signup form submission
@@ -23,7 +26,9 @@ export default function Signup() {
         }
 
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            const usercredentails = await createUserWithEmailAndPassword(auth, email, password);
+            dispatch(setUser(usercredentails.user));
+            alert('Successful signup')
             navigate("/signin");
         } catch (error) {
             console.error("Error signing up:", error.message);
@@ -36,7 +41,8 @@ export default function Signup() {
     const handleGoogleSignup = async () => {
         const provider = new GoogleAuthProvider();
         try {
-            await signInWithPopup(auth, provider);
+            const result = await signInWithPopup(auth, provider);
+            dispatch(setUser(result.user))
             navigate("/");
         } catch (error) {
             console.error("Error with Google signup:", error.message);

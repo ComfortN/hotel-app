@@ -3,12 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
 import { auth } from '../../firebase/firebase';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/userSlice';
 
 export default function Signin() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
   // Function to handle signin form submission
@@ -16,7 +19,9 @@ export default function Signin() {
     e.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const usercredentals = await signInWithEmailAndPassword(auth, email, password);
+      dispatch(setUser(usercredentals.user))
+      alert('successfull login')
       navigate("/");
     } catch (error) {
       console.error("Error signing in:", error.message);
@@ -29,7 +34,8 @@ export default function Signin() {
   const handleGoogleSignin = async () => {
     const provider = new GoogleAuthProvider();
     try {
-        await signInWithPopup(auth, provider);
+        const result = await signInWithPopup(auth, provider);
+        dispatch(setUser(result.user))
         navigate("/");
     } catch (error) {
         console.error("Error with Google signin:", error.message);
