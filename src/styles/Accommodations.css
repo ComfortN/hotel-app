@@ -1,0 +1,96 @@
+.accommodations-page {
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+.accommodations-list {
+    margin: 0 auto;
+}
+
+.accommodation-item {
+    display: flex;
+    background-color: #1e1e1e;
+    overflow: hidden;
+    height: 80vh;
+}
+
+.accommodation-image {
+    flex: 1;
+    width: 100%;
+    height: auto;
+}
+
+.accommodation-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.accommodation-details h3 {
+    font-size: 1.8em;
+    color: #e5e5e5;
+}
+
+.accommodation-details p {
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+.accommodation-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1em;
+    color: #f0a620;
+    margin-bottom: 20px;
+}
+.accommodation-buttons {
+    gap: 2em;
+}
+
+.accommodation-buttons button {
+    background-color: #e59500;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+
+.accommodation-buttons button:hover {
+    background-color: #f0a620;
+}
+
+
+
+.accommodation-buttons .learn-more-btn {
+    background-color: transparent;
+    color: #fff;
+    padding: 0;
+    border: none;
+    font-size: 1em;
+    position: relative;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.accommodation-buttons .learn-more-btn::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    margin-top: 5px;
+    transition: width 0.3s ease;
+}
+
+.accommodation-buttons .learn-more-btn:hover {
+    color: #f0a620;
+}
+
+.accommodation-buttons .learn-more-btn:hover::after {
+    background-color: #f0a620;
+    color: white;
+    width: 100%;
+}

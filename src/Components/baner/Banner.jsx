@@ -7,7 +7,7 @@ import Navbar from '../navbar/Navbar';
 import MiniNav from '../navbar/MiniNav';
 import CheckAvaillabilityForm from './CheckAvaillabilityForm';
 
-export default function Banner() {
+export default function Banner({title}) {
   return (
     <header className="banner" style={{backgroundImage: `url(${backgroundImg})`}}>
 
