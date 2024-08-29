@@ -1,0 +1,27 @@
+.mini-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-bottom: solid 2px black;
+}
+
+.mini-navbar-left svg {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.mini-navbar-right span {
+    margin-right: 20px;
+}
+
+.book-now-btn {
+    padding: 8px 16px;
+    background-color: black;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
