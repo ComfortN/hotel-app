@@ -1,0 +1,46 @@
+.about-us {
+    display: flex;
+    background-color: #1E1E1E;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+
+.title-and-subtittle {
+    flex: 1;
+}
+
+.about-us-content {
+    flex: 1;
+    text-align: left;
+}
+
+.about-us h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.about-us h4 {
+    font-size: 20px;
+}
+
+.about-us p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.learn-more-btn {
+    padding: 12px 24px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.learn-more-btn:hover {
+    background-color: #2f343b;
+}
