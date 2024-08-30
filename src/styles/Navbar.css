@@ -22,6 +22,12 @@
     gap: 30px;
     flex: 2; /* Allow the nav links to take up equal space */
     justify-content: center; /* Center the links horizontally */
+    text-decoration: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .nav-links li {

@@ -20,14 +20,42 @@
     height: auto;
 }
 
+.review {
+    display: flex;
+    gap: 2em;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.stars {
+    display: flex;
+}
+
+.stars svg {
+    color: #f0a620;
+    font-size: 1.2em;
+}
+
+
 .accommodation-details {
     flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.details-text {
+    margin: 20px;
+    width: 80%;
 }
 
 .accommodation-details h3 {
     font-size: 1.8em;
+    margin: 10px 0;
     color: #e5e5e5;
 }
 
@@ -44,6 +72,7 @@
     margin-bottom: 20px;
 }
 .accommodation-buttons {
+    display: flex;
     gap: 2em;
 }
 
@@ -63,7 +92,6 @@
 }
 
 
-
 .accommodation-buttons .learn-more-btn {
     background-color: transparent;
     color: #fff;
@@ -75,6 +103,7 @@
     transition: color 0.3s ease;
 }
 
+
 .accommodation-buttons .learn-more-btn::after {
     content: '';
     display: block;
@@ -85,9 +114,12 @@
     transition: width 0.3s ease;
 }
 
+
 .accommodation-buttons .learn-more-btn:hover {
-    color: #f0a620;
+    padding: 10px 15px;
+    color: white;
 }
+
 
 .accommodation-buttons .learn-more-btn:hover::after {
     background-color: #f0a620;

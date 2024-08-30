@@ -2,6 +2,7 @@ import React from 'react';
 import '../../styles/Footer.css'
 import logoImg from '../../assets/LuxeStay Hotel logo (1).png';
 import { FaFacebookF, FaTwitter, FaInstagram, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt} from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -30,10 +31,10 @@ export default function Footer() {
                 </div>
             </div>
             <ul className="nav-link">
-                <li>Home</li>
-                <li>About</li>
-                <li>Accommodation</li>
-                <li>Contact</li>
+                <Link to='/'><li>Home</li></Link>
+                <Link to='/about'><li>About</li></Link>
+                <Link to='/accommodations'><li>Accommodation</li></Link>
+                <Link to='contact'><li>Contact</li></Link>
             </ul>
         </div>
         <div class="footer-bottom">
