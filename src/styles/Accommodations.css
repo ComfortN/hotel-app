@@ -86,6 +86,11 @@
     font-size: 1em;
 }
 
+.accommodation-buttons button a {
+    text-decoration: none;
+    color: inherit;
+}
+
 
 .accommodation-buttons button:hover {
     background-color: #f0a620;

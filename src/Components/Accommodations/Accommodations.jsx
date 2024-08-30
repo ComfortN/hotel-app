@@ -5,6 +5,7 @@ import Footer from '../foooter/Footer';
 import roomImage1 from '../../assets/Modern Bed Back Wall Design Luxury.png'
 import roomImage2 from '../../assets/download.png';
 import { FaStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function Accommodations() {
     return (
@@ -47,7 +48,7 @@ export default function Accommodations() {
                             <li>Private balcony</li>
                         </ul>
                         <div className="accommodation-buttons">
-                            <button className="book-now-btn">BOOK NOW</button>
+                            <Link to='/room-details'><button className="book-now-btn">BOOK NOW</button></Link>
                             <button className="learn-more-btn">LEARN MORE</button>
                         </div>
 

@@ -10,7 +10,7 @@ import Footer from '../foooter/Footer';
 export default function Home() {
   return (
     <div>
-      <Banner />
+      <Banner title= 'The Beauty of Fancy Living' />
       <LandingAbout />
       <DiscoverAccommodation />
       <WhyChooseUs />
