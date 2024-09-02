@@ -4,25 +4,37 @@
 }
 
 .room-info {
+    margin: 50px;
+    height: 50%;
+}
+
+.info-image{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 50px 0 0 0;
+    padding: 0;
+    width: 50%;
 }
 
 .room-info-container {
     display: flex;
     flex-direction: row;
+    width: 100%;
+    
 }
 
 .room-image {
     width: 100%;
-    height: auto;
+    height: 85vh;
 }
 
 .room-details-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    flex: 1;
     background-color: #1e1e1e;
-    width: 100%;
     padding: 20px;
 }
 
@@ -55,7 +67,6 @@
 
 .amenities-lists li {
     margin: 10px 0;
-    padding: 5px 0;
     border-bottom: 1px solid #444;
 }
 
@@ -111,12 +122,19 @@
     justify-content: center;
     align-items: center;
     height: 20%;
-    /* transition: transform 0.3s ease, background-color 0.3s ease; */
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
+.room-buttons a{
+    text-decoration: none;
+    color: inherit;
+}
+
 
 .feature:hover {
     transform: scale(1.05);
     background-color: #4b525b;
+    padding: 0;
 }
 
 .feature-icon {

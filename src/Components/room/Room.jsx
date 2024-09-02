@@ -5,6 +5,8 @@ import { FaStar } from 'react-icons/fa';
 import Banner from '../baner/Banner';
 import Footer from '../foooter/Footer';
 import { FaWifi, FaConciergeBell, FaUtensils, FaSwimmingPool } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+
 
 export default function RoomDetails() {
     return (
@@ -13,10 +15,14 @@ export default function RoomDetails() {
 
         <section className="room-info">
             <div className="room-info-container">
-                <img src={roomImage} alt="Room" className="room-image" />
+                <div className='info-image'>
+                    <img src={roomImage} alt="Room" className="room-image" />
+                </div>
+                
 
                 <div className="room-details-text">
-                    <div className="review">
+                    <div className='details-text'>
+                        <div className="review">
                         <div className="stars">
                             <FaStar />
                             <FaStar />
@@ -53,8 +59,14 @@ export default function RoomDetails() {
                     </ul>
 
                     <div className="room-buttons">
-                        <button className="book-now-btn">BOOK NOW</button>
+                        <Link to={'/checkout'}>
+                            <button className="book-now-btn">BOOK NOW</button>
+
+                        </Link>
+                        
                     </div>
+                    </div>
+                    
                 </div>
             </div>
         </section>

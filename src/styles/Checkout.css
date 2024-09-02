@@ -1,0 +1,152 @@
+.checkout-page {
+    background-color: #2f343b;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.checkout-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px;
+}
+
+.checkout-details, .order-summary {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+    margin-bottom: 20px;
+}
+
+.checkout-details {
+    width: 50%;
+    height: 50%;
+}
+
+.order-summary {
+    width: 30%;
+}
+
+h2 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 60%;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: black;
+    background-color: white;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.order-summary ul {
+    list-style: none;
+    padding: 0;
+}
+
+.order-summary ul li {
+    margin-bottom: 10px;
+}
+
+.total {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+
+.payment-container {
+    margin: 40px 20px;
+    padding: 20px;
+    background-color: #1e1e1e;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.card-payment{
+    display: flex;
+    justify-content: space-around;
+}
+
+.card-preview {
+margin-bottom: 20px;
+}
+
+.card {
+    width: 300px;
+    height: 180px;
+    background-color: #444;
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.card-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group-row {
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 2em;
+}
+
+/* .form-group-row .form-group {
+    flex: 1;
+}
+
+.form-group-row {
+    margin-right: 20px;
+} */
+
+.confirm-button {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+}
