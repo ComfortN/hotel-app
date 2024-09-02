@@ -1,0 +1,60 @@
+.about-us-container {
+    background-color: #2f343b;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 4em;
+    
+}
+
+
+.about-text-container{
+    display: flex;
+}
+
+.about-text{
+    width: 80%;
+}
+
+.about-us-content {
+    background-color: #1e1e1e;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.about-text-container h3 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.vision-section {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1e1e1e;
+}
+
+.vision-text {
+    width: 50%;
+    padding: 20px;
+    align-items: center;
+}
+
+.vision-text h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.vision-image {
+    width: 45%;
+}
+
+.vision-image-style {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.about-us-footer {
+    background-color: #1a1a1a;
+    padding: 20px;
+    text-align: center;
+}
