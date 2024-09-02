@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import '../../styles/Checkout.css';
 import Navbar from '../navbar/Navbar';
 import Footer from '../foooter/Footer';
+import { Link } from 'react-router-dom';
 
 export default function Checkout() {
     const [cardDetails, setCardDetails] = useState({
@@ -74,7 +75,7 @@ return (
     <div className="payment-container">
         <h2>Payment Details</h2>
         <div className='card-payment'>
-        <div className="card-preview">
+            <div className="card-preview">
             <div className="card">
                 <p>{cardDetails.cardholderName || 'CARDHOLDER NAME'}</p>
                 <p>{cardDetails.cardNumber || 'XXXX XXXX XXXX XXXX'}</p>
@@ -110,11 +111,48 @@ return (
                     type="text" name="cvv" placeholder="CVV" value={cardDetails.cvv} onChange={handleInputChange} />
                 </div>
             </div>
-            <button type="submit" className="confirm-button">Confirm</button>
+            <Link to='/successful-payment'>
+                <button type="submit" className="confirm-button">Confirm</button>
+            </Link>
+            
             </form>
         </div>
         
         </div>
+
+
+        <div className="policies-container">
+        <h2>Booking Policies</h2>
+        <ul>
+          <li>
+            <strong>Check-in:</strong> Guests can check-in from 3:00 PM to 10:00 PM. Early check-in is subject to availability and may incur additional charges.
+          </li>
+          <li>
+            <strong>Check-out:</strong> Check-out time is 12:00 PM. Late check-out is subject to availability and may incur additional charges.
+          </li>
+          <li>
+            <strong>Cancellation Policy:</strong> Free cancellation is available up to 48 hours before the check-in date. Cancellations made within 48 hours of the check-in date will be charged the first night's stay.
+          </li>
+          <li>
+            <strong>No Show:</strong> In case of no show, 100% of the first night's stay will be charged.
+          </li>
+          <li>
+            <strong>Children and Extra Beds:</strong> Children of all ages are welcome. Extra beds are available upon request and may incur additional charges.
+          </li>
+          <li>
+            <strong>Pets:</strong> Pets are not allowed in the premises.
+          </li>
+          <li>
+            <strong>Payment:</strong> Full payment is required at the time of booking. We accept all major credit and debit cards.
+          </li>
+          <li>
+            <strong>Smoking:</strong> Smoking is strictly prohibited inside the rooms. A cleaning fee will be charged for any violations.
+          </li>
+          <li>
+            <strong>COVID-19 Precautions:</strong> Guests are required to follow all local COVID-19 guidelines, including wearing masks in common areas and maintaining social distancing.
+          </li>
+        </ul>
+      </div>
 
     <Footer />
 </div>

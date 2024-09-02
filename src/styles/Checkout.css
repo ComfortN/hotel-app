@@ -4,6 +4,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    gap: 2em;
     justify-content: space-between;
 }
 
@@ -105,8 +106,8 @@ margin-bottom: 20px;
 }
 
 .card {
-    width: 300px;
-    height: 180px;
+    width: 30rem;
+    height: 15rem;
     background-color: #444;
     border-radius: 10px;
     padding: 20px;
@@ -128,17 +129,9 @@ margin-bottom: 20px;
 
 .form-group-row {
     display: flex;
-    /* justify-content: space-between; */
     gap: 2em;
 }
 
-/* .form-group-row .form-group {
-    flex: 1;
-}
-
-.form-group-row {
-    margin-right: 20px;
-} */
 
 .confirm-button {
     padding: 10px 20px;
@@ -149,4 +142,34 @@ margin-bottom: 20px;
     cursor: pointer;
     margin-top: 20px;
     width: 100%;
+}
+
+
+.policies-container {
+    margin: 40px 20px;
+    padding: 20px;
+    color: w;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+}
+
+.policies-container h2 {
+    margin-bottom: 20px;
+    color: white;
+}
+
+.policies-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.policies-container ul li {
+    margin-bottom: 10px;
+    color: white;
+    line-height: 1.6;
+}
+
+.policies-container ul li strong {
+    color: #000;
 }
