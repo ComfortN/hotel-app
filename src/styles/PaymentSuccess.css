@@ -1,0 +1,68 @@
+.payment-success-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2f343b;
+}
+
+.payment-success-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    width: 30%;
+}
+
+.success-icon {
+    color: #4caf50;
+    font-size: 10rem;
+    margin-bottom: 20px;
+}
+
+    h2 {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.amount {
+    color: white;
+    margin-bottom: 30px;
+}
+
+.payment-receipt {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.payment-receipt h3 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.receipt-details p {
+    color: white;
+    margin: 5px 0;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-button,
+.download-button {
+    background-color: black;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.profile-button:hover,
+.download-button:hover {
+    background-color: #555;
+}
