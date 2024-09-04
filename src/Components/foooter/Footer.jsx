@@ -32,9 +32,9 @@ export default function Footer() {
             </div>
             <ul className="nav-link">
                 <Link to='/'><li>Home</li></Link>
-                <Link to='/about'><li>About</li></Link>
+                <Link to='/about-us'><li>About</li></Link>
                 <Link to='/accommodations'><li>Accommodation</li></Link>
-                <Link to='contact'><li>Contact</li></Link>
+                <Link to='contact-us'><li>Contact</li></Link>
             </ul>
         </div>
         <div class="footer-bottom">

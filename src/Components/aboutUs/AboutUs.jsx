@@ -12,7 +12,8 @@ export default function AboutUs() {
             <div className="about-us-content">
                 <h2>ABOUT US</h2>
                 <div className="about-text-container">
-                    <h3>Lorem Ipsum is simply dummy text.</h3>
+                    <h3>Experience Luxury Like Never
+                    Before at our exclusive hotel.</h3>
                     <div className='about-text'>
                         <p>
                             Welcome to LuxeStay, where luxury meets comfort
