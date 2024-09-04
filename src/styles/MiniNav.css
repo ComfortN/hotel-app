@@ -25,3 +25,42 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mini-navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .mini-navbar-left,
+    .mini-navbar-right {
+        margin-bottom: 10px;
+    }
+
+    .mini-navbar-right {
+        flex-direction: column;
+    }
+
+    .mini-navbar-right span {
+        margin-right: 15px;
+        margin-bottom: 10px;
+    }
+
+    .book-now-btn {
+        width: 50%;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mini-navbar {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .book-now-btn {
+        padding: 8px;
+    }
+}
