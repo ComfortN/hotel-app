@@ -86,3 +86,39 @@ textarea{
 .send-message-button:hover {
     background-color: #444;
 }
+
+
+@media (max-width: 768px) {
+    .contact-section {
+        flex-direction: column;
+    }
+
+    .contact-info {
+        width: 85%;
+    }
+
+    .contact-map {
+        width: 100%;
+        height: auto;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    .contact-form {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .form-row input,
+    .form-row textarea {
+        width: 80%;
+    }
+
+    .form-row-message, textarea {
+        width: 85%;
+        padding: 0;
+    }
+}

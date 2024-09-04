@@ -108,6 +108,7 @@
 
 @media (max-width: 480px) {
     .nav-link {
+        padding: 0;
         flex-wrap: wrap;
     }
 
