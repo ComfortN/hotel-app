@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useState} from 'react'
 import '../../styles/Navbar.css'
-import { FaFacebookF, FaTwitter, FaInstagram, FaPhoneAlt, FaEnvelope, FaUserCircle } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaInstagram, FaPhoneAlt, FaEnvelope, FaUserCircle, FaBars, FaTimes } from 'react-icons/fa';
 import logoImg from '../../assets/LuxeStay Hotel logo (1).png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,8 +10,9 @@ import { logout } from '../../redux/userSlice';
 
 export default function Navbar() {
   const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const handleLogout = async () => {
         try {
@@ -23,6 +24,10 @@ export default function Navbar() {
             alert('Failed to log out. Please try again.');
         }
     };
+
+    const toggleSidebar = () => {
+      setSidebarOpen(!sidebarOpen);
+    };
     
   return (
     <div>
@@ -33,7 +38,8 @@ export default function Navbar() {
           <img src={logoImg} alt="LuxeStay Hotel Logo" />
         </div>
 
-        <ul className="nav-links">
+
+        <ul className='nav-links'>
           <Link to='/'><li>Home</li></Link>
           <Link to='/about-us'><li>About</li></Link>
           <Link to='/accommodations'><li>Accommodation</li></Link>
@@ -56,7 +62,27 @@ export default function Navbar() {
                         </Link>
                     )}
         </div>
+        <div className="menu-toggle" onClick={toggleSidebar}>
+          {sidebarOpen ? <FaTimes /> : <FaBars />}
+        </div>
       </nav>
+
+      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <ul className="sidebar-links">
+          <Link to="/" onClick={toggleSidebar}><li>Home</li></Link>
+          <Link to="/about-us" onClick={toggleSidebar}><li>About</li></Link>
+          <Link to="/accommodations" onClick={toggleSidebar}><li>Accommodation</li></Link>
+          <Link to="/contact-us" onClick={toggleSidebar}><li>Contact</li></Link>
+          <li>
+            <Link to={'/profile-page'} onClick={toggleSidebar}>
+              Profile
+            </Link>
+          </li>
+          <li onClick={() => { handleLogout(); toggleSidebar(); }}>
+              {user ? 'Log Out' : <Link to={'/signin'}>Sign In</Link>}
+          </li>
+        </ul>
+      </div>
     </div>
   )
 }

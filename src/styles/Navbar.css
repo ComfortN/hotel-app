@@ -4,7 +4,7 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
-    
+    position: relative;
 }
 
 
@@ -24,6 +24,7 @@
     justify-content: center; /* Center the links horizontally */
     text-decoration: none;
 }
+
 
 .nav-links a {
     text-decoration: none;
@@ -70,4 +71,82 @@
 
 .login-button:hover {
     background-color: #2f343b;
+}
+
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    color: black;
+    z-index: 1000;
+}
+
+.menu-toggle svg {
+    width: 24px;
+    height: 24px;
+}
+
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Start off-screen */
+    width: 250px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+    transition: right 0.3s ease;
+}
+
+
+.sidebar.open {
+    right: 0; /* Slide in */
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+    margin: 20px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar-links li {
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-links li:hover {
+    background-color: #2f343b;
+}
+
+
+@media (max-width: 768px) {
+    .nav-links,
+    .nav-actions {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo img {
+        width: 30%;
+    }
+
 }
