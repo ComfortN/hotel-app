@@ -64,3 +64,51 @@
     height: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
+
+@media screen and (max-width: 768px) {
+    .luxury-suites {
+        height: auto;
+    }
+    .luxury-suites-content {
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+    }
+
+    .luxury-suites-text {
+        width: 100%;
+    }
+
+    .luxury-suites-text h2 {
+        font-size: 28px;
+    }
+
+    .luxury-suites-text p {
+        font-size: 16px;
+    }
+
+    .luxury-suites-image {
+        width: 100%;
+    }
+
+    .view-accommodation-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .luxury-suites-text h2 {
+        font-size: 24px;
+    }
+
+    .luxury-suites-text p {
+        font-size: 14px;
+    }
+
+    .view-accommodation-btn {
+        padding: 10px 20px;
+    }
+}

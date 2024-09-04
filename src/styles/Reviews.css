@@ -77,3 +77,56 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+
+@media screen and (max-width: 768px) {
+    .review-card {
+        width: 90%;
+    }
+    .review-text {
+        width: 80%;
+    }
+
+    .nav-arrow {
+        font-size: 1.5em;
+    }
+
+    .left-arrow {
+        left: 5px;
+    }
+
+    .right-arrow {
+        right: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .reviews-section h2 {
+        font-size: 1.5em;
+    }
+
+    .review-card {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .review-header h3 {
+        font-size: 1em;
+    }
+
+    .review-text {
+        font-size: 0.9em;
+    }
+
+    .nav-arrow {
+        font-size: 1.2em;
+    }
+
+    .left-arrow {
+        left: 2px;
+    }
+
+    .right-arrow {
+        right: 2px;
+    }
+}

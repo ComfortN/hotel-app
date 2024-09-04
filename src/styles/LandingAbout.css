@@ -44,3 +44,58 @@
 .learn-more-btn:hover {
     background-color: #2f343b;
 }
+
+
+@media screen and (max-width: 768px) {
+    .about-us {
+        padding: 30px 15px;
+        text-align: center;
+    }
+
+    .title-and-subtittle,
+    .about-us-content {
+        flex: 1 1 100%; /* Stack elements vertically on small screens */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .about-us-content {
+        text-align: center;
+    }
+
+    .about-us h2 {
+        font-size: 28px;
+    }
+
+    .about-us h4 {
+        font-size: 18px;
+    }
+
+    .about-us p {
+        font-size: 14px;
+    }
+
+    .learn-more-btn {
+        width: 100%;
+        padding: 10px 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .about-us {
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+
+    .about-us h2 {
+        font-size: 24px;
+    }
+
+    .about-us h4 {
+        font-size: 16px;
+    }
+
+    .about-us p {
+        font-size: 13px;
+    }
+}

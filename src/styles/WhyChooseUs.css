@@ -63,3 +63,35 @@
     width: 100%;
     height: 100%;
 }
+
+
+@media screen and (max-width: 768px) {
+    .why-choose-us-content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        height: auto;
+    }
+
+    .feature-heading {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .why-choose-us h2 {
+        font-size: 1.5em;
+    }
+
+    .feature-icon {
+        font-size: 1.5em;
+    }
+
+    .feature {
+        font-size: 0.8em;
+    }
+}
