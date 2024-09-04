@@ -7,6 +7,10 @@ import ForgotPassword from './Components/signIn/ForgotPassword';
 import Accommodations from './Components/Accommodations/Accommodations';
 import RoomDetails from './Components/room/Room';
 import Checkout from './Components/checkout/Checkout';
+import PaymentSuccess from './Components/payment/PaymentSuccess';
+import ContactUs from './Components/contactUs/ContactUs';
+import AboutUs from './Components/aboutUs/AboutUs';
+import ProfilePage from './Components/profilePage/ProfilePage';
 
 function App() {
   return (
@@ -19,6 +23,10 @@ function App() {
         <Route path='/accommodations' element={<Accommodations />} />
         <Route path='/room-details' element={<RoomDetails />} />
         <Route path='/checkout' element={<Checkout />} />
+        <Route path='/successful-payment' element={<PaymentSuccess />} />
+        <Route path='/contact-us' element={<ContactUs />} />
+        <Route path='/about-us' element={<AboutUs />} />
+        <Route path='/profile-page' element={<ProfilePage />} />
       </Routes>
     </Router>
     

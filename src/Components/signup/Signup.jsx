@@ -6,6 +6,7 @@ import { auth } from '../../firebase/firebase';
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/userSlice';
+import { addUserToFirestore } from '../../firebase/firestoreUtils';
 
 
 export default function Signup() {
@@ -26,8 +27,12 @@ export default function Signup() {
         }
 
         try {
-            const usercredentails = await createUserWithEmailAndPassword(auth, email, password);
-            dispatch(setUser(usercredentails.user));
+            const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredentials.user;
+            dispatch(setUser(user));
+            // Add user to Firestore
+            await addUserToFirestore({ uid: user.uid, email: user.email,});
+
             alert('Successful signup')
             navigate("/signin");
         } catch (error) {
@@ -42,7 +47,12 @@ export default function Signup() {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(auth, provider);
-            dispatch(setUser(result.user))
+            const user = result.user;
+            dispatch(setUser(user));
+
+            // Add user to Firestore
+            await addUserToFirestore({ uid: user.uid, email: user.email, });
+
             navigate("/");
         } catch (error) {
             console.error("Error with Google signup:", error.message);
