@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../styles/LandingAbout.css'
+import { Link } from 'react-router-dom';
 
 export default function LandingAbout() {
     return (
@@ -22,7 +23,10 @@ export default function LandingAbout() {
           from our elegantly appointed rooms to our attentive and friendly staff.
           Discover the true meaning of luxury at LuxeStay.
         </p> */}
-        <button className="learn-more-btn">Learn More</button>
+        <Link to={'/about-us'}>
+          <button className="learn-more-btn">Learn More</button>
+        </Link>
+        
       </div>
     </section>
   )

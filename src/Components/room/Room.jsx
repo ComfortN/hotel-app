@@ -5,13 +5,27 @@ import { FaStar } from 'react-icons/fa';
 import Banner from '../baner/Banner';
 import Footer from '../foooter/Footer';
 import { FaWifi, FaConciergeBell, FaUtensils, FaSwimmingPool } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { addToCart } from '../../redux/cartSlice';
+import { useDispatch } from 'react-redux';
 
 
 export default function RoomDetails() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const room = location.state?.room;
+
+    // Add room to cart
+    const handleBookNow = () => {
+        dispatch(addToCart(room));
+        navigate('/checkout');
+    }
+
     return (
         <div className="room-details-page">
         <Banner title="ROOM" pageTitle="Room Details" />
+        
 
         <section className="room-info">
             <div className="room-info-container">
@@ -24,13 +38,9 @@ export default function RoomDetails() {
                     <div className='details-text'>
                         <div className="review">
                         <div className="stars">
-                            <FaStar />
-                            <FaStar />
-                            <FaStar />
-                            <FaStar />
-                            <FaStar />
+                        {[...Array(5)].map((_, i) => <FaStar key={i} />)}
                         </div>
-                    <span>Rating: 5.0</span>
+                    <span>Rating: {room.rating}</span>
                     </div>
                     
                     <h3>DISCOVER OUR LUXURY SUITES AND VILLAS</h3>
@@ -48,21 +58,19 @@ export default function RoomDetails() {
                     </p>
                     
                     <div className="room-price">
-                        <span>Price: R1500 / night</span>
+                        <span>Price: {room.price}</span>
                     </div>
 
                     <ul className="amenities-lists">
-                        <li>Soap & pillow menu</li>
-                        <li>Luxury toiletries</li>
-                        <li>Evening Turndown</li>
-                        <li>Private balcony</li>
+                    {room.amenities.map((amenity, i) => (
+                                    <li key={i}>{amenity}</li>
+                                ))}
                     </ul>
 
                     <div className="room-buttons">
-                        <Link to={'/checkout'}>
-                            <button className="book-now-btn">BOOK NOW</button>
-
-                        </Link>
+                    <button className="book-now-btn" onClick={handleBookNow}>
+                                    BOOK NOW
+                                </button>
                         
                     </div>
                     </div>
@@ -118,4 +126,4 @@ export default function RoomDetails() {
         <Footer />
         </div>
     )
-}
+};

@@ -3,8 +3,10 @@ import '../../styles/Checkout.css';
 import Navbar from '../navbar/Navbar';
 import Footer from '../foooter/Footer';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function Checkout() {
+  const { cartItems, totalAmount } = useSelector((state) => state.cart);
     const [cardDetails, setCardDetails] = useState({
         cardholderName: '',
         cardNumber: '',
@@ -61,11 +63,15 @@ return (
         <div className="order-summary">
             <h2>Your Cart</h2>
             <ul>
-            <li>Item Name - R 1000</li>
+            {cartItems.map((item, index) => (
+              <li key={index}>
+                  {item.name} - {item.price}
+              </li>
+          ))}
             
             </ul>
             <div className="total">
-            <p>Total: R 1000</p>
+            <p>Total: R {totalAmount}</p>
             </div>
         </div>
 
