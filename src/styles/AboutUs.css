@@ -58,3 +58,28 @@
     padding: 20px;
     text-align: center;
 }
+
+
+@media (max-width: 768px) {
+    .about-text-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .vision-section {
+        flex-direction: column-reverse;
+        text-align: center;
+        align-self: start;
+        
+    }
+    
+    .vision-text {
+        width: 100%;
+        padding: 0;
+        padding: 10px;
+    }
+
+    .vision-image {
+        width: 100%;
+    }
+}
