@@ -97,3 +97,17 @@
 .social-icons {
     gap: 1em;
 }
+
+
+@media (max-width: 768px) {
+    .footer-links{
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-link {
+        flex-wrap: wrap;
+    }
+
+}
