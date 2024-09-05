@@ -8,7 +8,7 @@ import { FaWifi, FaConciergeBell, FaUtensils, FaSwimmingPool } from 'react-icons
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { addToCart } from '../../redux/cartSlice';
 import { useDispatch } from 'react-redux';
-
+import BookingForm from '../bookingForm/BookingForm';
 
 export default function RoomDetails() {
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export default function RoomDetails() {
     return (
         <div className="room-details-page">
         <Banner title="ROOM" pageTitle="Room Details" />
-        
+        {/* <BookingForm /> */}
 
         <section className="room-info">
             <div className="room-info-container">
@@ -58,7 +58,7 @@ export default function RoomDetails() {
                     </p>
                     
                     <div className="room-price">
-                        <span>Price: {room.price}</span>
+                        <span>Price: R {room.price}</span>
                     </div>
 
                     <ul className="amenities-lists">

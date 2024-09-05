@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { fetchFavorites, addFavorite, removeFavorite, syncFavoritesToFirestore } from '../../redux/favoritesSlice';
 import { getAuth } from 'firebase/auth';
 
+
 export default function Accommodations() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -46,21 +47,21 @@ export default function Accommodations() {
         {
             name: 'Royal Suite',
             image: roomImage1,
-            price: 'R1500 / night',
+            price: '1500',
             rating: 5.0,
             amenities: ['Soap & pillow menu', 'Luxury toiletries', 'Evening Turndown', 'Private balcony'],
         },
         {
             name: 'Serenity Villa',
             image: roomImage2,
-            price: 'R1800 / night',
+            price: '1800',
             rating: 5.0,
             amenities: ['Soap & pillow menu', 'Luxury toiletries', 'Evening Turndown', 'Private balcony'],
         },
         {
             name: 'Prestige Suite',
             image: roomImage1,
-            price: 'R1500 / night',
+            price: '1500',
             rating: 5.0,
             amenities: ['Soap & pillow menu', 'Luxury toiletries', 'Evening Turndown', 'Private balcony'],
         },
@@ -93,7 +94,7 @@ export default function Accommodations() {
                                     and stunning views, making your stay a memorable experience.
                                 </p>
                                 <div className="accommodation-info">
-                                    <span>Price: {room.price}</span>
+                                    <span>Price: R {room.price}</span>
                                 </div>
                                 <ul className="amenities-list">
                                     {room.amenities.map((amenity, i) => (
