@@ -24,6 +24,7 @@ function App() {
         <Route path='/room-details' element={<RoomDetails />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/successful-payment' element={<PaymentSuccess />} />
+        <Route path="/payment-success/:receiptId" element={<PaymentSuccess />} />
         <Route path='/contact-us' element={<ContactUs />} />
         <Route path='/about-us' element={<AboutUs />} />
         <Route path='/profile-page' element={<ProfilePage />} />

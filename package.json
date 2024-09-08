@@ -17,6 +17,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.5",
     "dayjs": "^1.11.13",
+    "file-saver": "^2.0.5",
     "firebase": "^10.13.0",
     "hotel-app": "file:",
     "react": "^18.3.1",

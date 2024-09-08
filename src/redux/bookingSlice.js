@@ -8,6 +8,7 @@ export const fetchBookings = createAsyncThunk(
     const q = query(collection(database, 'bookings'), where('userId', '==', userId));
     const querySnapshot = await getDocs(q);
     const bookings = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    console.log('fetched', bookings)
     return bookings;
   }
 );
@@ -18,6 +19,12 @@ export const addBooking = createAsyncThunk(
     try {
       // Save the entire booking details to Firestore
       const docRef = await addDoc(collection(database, 'bookings'), booking);
+      await addDoc(collection(database, 'receipts'), {
+        bookingId: docRef.id,
+        userId: booking.userId,
+        amount: booking.amount,
+        createdAt: new Date(),
+      });
       return { id: docRef.id, ...booking }; // Return the full booking object with id
     } catch (error) {
       throw new Error(error.message); // Handle any errors

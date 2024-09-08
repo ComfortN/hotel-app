@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/ProfilePage.css';
 import Navbar from '../navbar/Navbar';
 import Footer from '../foooter/Footer';
+import { auth, database } from '../../firebase/firebase';
+import { getUserFromFirestore, updateUserInFirestore } from '../../firebase/firestoreUtils';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchBookings } from '../../redux/bookingSlice';
+
 
 const getFavoritesFromLocalStorage = () => {
     const favorites = localStorage.getItem('favorites');
@@ -9,15 +14,52 @@ const getFavoritesFromLocalStorage = () => {
 };
 
 export default function ProfilePage() {
+    const dispatch = useDispatch();
+    // const { bookings} = useSelector((state) => state.bookings);
+    const { bookings = [] } = useSelector((state) => state.bookings || {});
+
+
     const [isEditing, setIsEditing] = useState(false);
     const [userData, setUserData] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         phone: "",
         address: "",
     });
 
     const [favorites, setFavorites] = useState([]);
+
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const currentUser = auth.currentUser;
+                console.log(currentUser)
+                if (currentUser) {
+                    const userData = await getUserFromFirestore(currentUser.uid);
+                    if (userData) {
+                        dispatch(fetchBookings(currentUser.uid));
+                        setUserData({
+                            firstName: userData.firstName || "",
+                            lastName: userData.lastName || "",
+                            email: userData.email || "",
+                            phone: userData.phone || "",
+                            address: userData.address || "",
+                        });
+                        setFavorites(userData.favorites || []);
+                    }
+                } else {
+                    console.log("No user is signed in.");
+                }
+            } catch (error) {
+                console.error("Error fetching user data: ", error);
+            }
+        };
+
+        fetchUserData();
+    }, [dispatch, auth.currentUser]);
+
 
     useEffect(() => {
         setFavorites(getFavoritesFromLocalStorage());
@@ -32,9 +74,18 @@ export default function ProfilePage() {
         setIsEditing(true);
     };
 
-    const handleSaveClick = () => {
+    const handleSaveClick = async () => {
         setIsEditing(false);
-        // Save userData to your backend or local storage here
+        try {
+            // Update Firestore with the new user data
+            const currentUser = auth.currentUser;
+            if (currentUser) {
+                await updateUserInFirestore(currentUser.uid, userData);
+                
+            }
+        } catch (error) {
+            console.error("Error updating user data: ", error);
+        }
     };
 
     const handleCancelClick = () => {
@@ -66,11 +117,19 @@ export default function ProfilePage() {
                 <div className="profile-details">
                     <h2>Profile Details</h2>
                     <div className="detail-item">
-                        <label>Name:</label>
+                        <label>First Name:</label>
                         {isEditing ? (
-                            <input type="text" name="name" value={userData.name} onChange={handleInputChange} />
+                            <input type="text" name="firstName" value={userData.firstName} onChange={handleInputChange} />
                         ) : (
-                            <p>{userData.name}</p>
+                            <p>{userData.firstName}</p>
+                        )}
+                    </div>
+                    <div className="detail-item">
+                        <label>Last Name:</label>
+                        {isEditing ? (
+                            <input type="text" name="lastName" value={userData.lastName} onChange={handleInputChange} />
+                        ) : (
+                            <p>{userData.lastName}</p>
                         )}
                     </div>
                     <div className="detail-item">
@@ -103,8 +162,11 @@ export default function ProfilePage() {
                     <div className="profile-section">
                         <h2>My Bookings</h2>
                         <ul>
-                            <li>Booking 1 - Date: 01/01/2024</li>
-                            <li>Booking 2 - Date: 02/02/2024</li>
+                            {bookings.length ? bookings.map((booking) => (
+                                <li key={booking.id}>
+                                    Booking {booking.id} - {booking.checkInDate} to {booking.checkOutDate}
+                                </li>
+                            )) : <p>No bookings found.</p>}
                         </ul>
                     </div>
 

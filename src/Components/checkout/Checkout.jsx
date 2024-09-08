@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../../styles/Checkout.css';
 import Navbar from '../navbar/Navbar';
 import Footer from '../foooter/Footer';
@@ -12,6 +12,7 @@ import BookingForm from '../bookingForm/BookingForm';
 
 export default function Checkout() {
   const { cartItems, bookingDetails } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.user);
 
   const [customerDetails, setCustomerDetails] = useState({
     firstName: '',
@@ -25,6 +26,13 @@ export default function Checkout() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/signin');
+    }
+  }, [user, navigate]);
 
 
   const handleInputChange = (e) => {
@@ -60,6 +68,15 @@ export default function Checkout() {
 
 
 const totalAmount = calculateTotalAmount();
+
+
+const bookingDetailsWithUserId = {
+  ...bookingDetails,
+  ...customerDetails,
+  cartItems,
+  totalAmount,
+  userId: user.uid
+};
 
 
 return (
@@ -130,7 +147,7 @@ return (
 
     <div className="payment-container">
         <h2>Payment Details</h2>
-        <StripePayment bookingDetails={{ ...bookingDetails, ...customerDetails, cartItems, totalAmount }} />
+        <StripePayment bookingDetails={bookingDetailsWithUserId} />
 
         
         </div>
