@@ -8,7 +8,6 @@ import { FaWifi, FaConciergeBell, FaUtensils, FaSwimmingPool } from 'react-icons
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { addToCart } from '../../redux/cartSlice';
 import { useDispatch } from 'react-redux';
-import BookingForm from '../bookingForm/BookingForm';
 
 export default function RoomDetails() {
     const dispatch = useDispatch();
@@ -22,15 +21,20 @@ export default function RoomDetails() {
         navigate('/checkout');
     }
 
+
+    if (!room) {
+        return <p>Room details not available.</p>;
+    }
+
     return (
         <div className="room-details-page">
         <Banner title="ROOM" pageTitle="Room Details" />
-        {/* <BookingForm /> */}
+        
 
         <section className="room-info">
             <div className="room-info-container">
                 <div className='info-image'>
-                    <img src={roomImage} alt="Room" className="room-image" />
+                    <img src={room.image} alt={room.name} className="room-image" />
                 </div>
                 
 
@@ -43,10 +47,12 @@ export default function RoomDetails() {
                     <span>Rating: {room.rating}</span>
                     </div>
                     
-                    <h3>DISCOVER OUR LUXURY SUITES AND VILLAS</h3>
+                    {/* <h3>DISCOVER OUR LUXURY SUITES AND VILLAS</h3> */}
+                    <h3>{room.name}</h3>
                     <p>
-                        Our luxury suites are designed to provide the utmost comfort and elegance.
-                        Each suite features modern amenities, stylish interiors, and stunning views to ensure a memorable stay.
+                        {/* Our luxury suites are designed to provide the utmost comfort and elegance.
+                        Each suite features modern amenities, stylish interiors, and stunning views to ensure a memorable stay. */}
+                        {room.description}
                     </p>
 
                     <p>

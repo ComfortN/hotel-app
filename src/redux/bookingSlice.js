@@ -15,8 +15,13 @@ export const fetchBookings = createAsyncThunk(
 export const addBooking = createAsyncThunk(
   'bookings/addBooking',
   async (booking) => {
-    const docRef = await addDoc(collection(database, 'bookings'), booking);
-    return { id: docRef.id, ...booking };
+    try {
+      // Save the entire booking details to Firestore
+      const docRef = await addDoc(collection(database, 'bookings'), booking);
+      return { id: docRef.id, ...booking }; // Return the full booking object with id
+    } catch (error) {
+      throw new Error(error.message); // Handle any errors
+    }
   }
 );
 
@@ -35,6 +40,9 @@ const bookingSlice = createSlice({
       })
       .addCase(addBooking.fulfilled, (state, action) => {
         state.bookings.push(action.payload);
+      })
+      .addCase(addBooking.rejected, (state, action) => {
+        state.error = action.error.message; // Handle errors
       });
   },
 });

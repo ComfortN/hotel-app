@@ -3,6 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useDispatch } from 'react-redux';
 import { addBooking } from '../../redux/bookingSlice';
+import { useNavigate } from 'react-router-dom';
 
 const stripePromise = loadStripe('pk_test_51PvYukIcyHoH5Xszeca5rNyDU2CaCnzOvKWagl1z2t3WWx5Y7MyclGyGTE0H0fHNPfbYv0EWnbsOJV4HiRWBhr1100gBUhPmUu');
 
@@ -10,6 +11,7 @@ function CheckoutForm({ bookingDetails }) {
     const stripe = useStripe();
     const elements = useElements();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,6 +29,8 @@ function CheckoutForm({ bookingDetails }) {
             paymentMethodId: paymentMethod.id,
         };
         dispatch(addBooking(booking));
+        navigate('/successful-payment')
+        console.log(booking);
         }
     };
 

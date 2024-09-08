@@ -7,16 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import {createBooking} from '../../redux/bookingSlice'
 import StripeCheckout from 'react-stripe-checkout';
 import StripePayment from './CheckoutForm';
+import BookingForm from '../bookingForm/BookingForm';
 
 
 export default function Checkout() {
-  const { cartItems, totalAmount } = useSelector((state) => state.cart);
-    const [cardDetails, setCardDetails] = useState({
-        cardholderName: '',
-        cardNumber: '',
-        expDate: '',
-        cvv: ''
-      });
+  const { cartItems, totalAmount, bookingDetails } = useSelector((state) => state.cart);
 
   const [customerDetails, setCustomerDetails] = useState({
     firstName: '',
@@ -33,51 +28,38 @@ export default function Checkout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-      // const handleInputChange = (e) => {
-      //   const { name, value } = e.target;
-      //   setCardDetails({ ...cardDetails, [name]: value });
-      // };
 
-      const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setCustomerDetails({ ...customerDetails, [name]: value });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCustomerDetails({ ...customerDetails, [name]: value });
+  };
+
+
+  const handleCheckout = () => {
+    const fullBookingDetails = {
+      ...bookingDetails,
+      ...customerDetails,
+      cartItems,
+      totalAmount,
     };
 
-    // const handleInputChange = (e) => {
-    //   const { name, value } = e.target;
-    //   if (name in cardDetails) {
-    //     setCardDetails({ ...cardDetails, [name]: value });
-    //   } else {
-    //     setCustomerDetails({ ...customerDetails, [name]: value });
-    //   }
-    // };
-  
-    // const onToken = (token) => {
-    //   const bookingDetails = {
-    //     ...customerDetails,
-    //     cartItems,
-    //     totalAmount,
-    //     paymentToken: token,
-    //   };
-    //   dispatch(createBooking(bookingDetails))
-    //     .unwrap()
-    //     .then(() => {
-    //       navigate('/successful-payment');
-    //     })
-    //     .catch((error) => {
-    //       console.error('Failed to create booking:', error);
-    //     });
-    // };
-
-
-    const bookingDetails = {
-      ...customerDetails,
-      totalAmount,
-      cartItems,
+    // Dispatch createBooking action with fullBookingDetails here
+    // dispatch(createBooking(fullBookingDetails));
   };
+
+
+  const fullBookingDetails = {
+    ...bookingDetails,
+    ...customerDetails,
+    cartItems,
+    totalAmount,
+  };
+
+
 return (
 <div className="checkout-page">
     <Navbar />
+    <BookingForm />
 
     <div className="checkout-container">
         <div className="checkout-details">
@@ -123,6 +105,10 @@ return (
             {cartItems.map((item, index) => (
               <li key={index}>
                   {item.name} - {item.price}
+                  <div><strong>Adults:</strong> {bookingDetails.adults}</div>
+                <div><strong>Children:</strong> {bookingDetails.children}</div>
+                <div><strong>Check-In:</strong> {new Date(bookingDetails.checkInDate).toLocaleDateString()}</div>
+                <div><strong>Check-Out:</strong> {new Date(bookingDetails.checkOutDate).toLocaleDateString()}</div>
               </li>
           ))}
             
@@ -137,56 +123,8 @@ return (
 
     <div className="payment-container">
         <h2>Payment Details</h2>
-        <StripePayment bookingDetails={bookingDetails} />
-        {/* <div className='card-payment'>
-            <div className="card-preview">
-            <div className="card">
-                <p>{cardDetails.cardholderName || 'CARDHOLDER NAME'}</p>
-                <p>{cardDetails.cardNumber || 'XXXX XXXX XXXX XXXX'}</p>
-                <div className="card-details">
-                <p>{cardDetails.expDate || 'MM/YY'}</p>
-                <p>{cardDetails.cvv || 'CVV'}</p>
-                </div>
-            </div>
-        </div>
-            <form>
-            <div className="form-group">
-                <label>Cardholder Name</label>
-                <input
-                type="text" name="cardholderName" placeholder="Enter Cardholder Name" value={cardDetails.cardholderName}
-                onChange={handleInputChange}/>
-            </div>
-            <div className="form-group">
-                <label>Card Number</label>
-                <input
-                type="text" name="cardNumber" placeholder="Enter Card Number" value={cardDetails.cardNumber}
-                onChange={handleInputChange} />
-            </div>
-            <div className="form-group-row">
-                <div className="form-group">
-                <label>Exp Date</label>
-                <input
-                    type="text" name="expDate" placeholder="MM/YY" value={cardDetails.expDate} onChange={handleInputChange}
-                />
-                </div>
-                <div className="form-group">
-                <label>CVV</label>
-                <input
-                    type="text" name="cvv" placeholder="CVV" value={cardDetails.cvv} onChange={handleInputChange} />
-                </div>
-            </div>
-            {/* <Link to='/successful-payment'>
-                <button type="submit" className="confirm-button">Confirm</button>
-            </Link> */}
-            {/* <StripeCheckout
-              token={onToken}
-              stripeKey="pk_test_51PvYukIcyHoH5Xszeca5rNyDU2CaCnzOvKWagl1z2t3WWx5Y7MyclGyGTE0H0fHNPfbYv0EWnbsOJV4HiRWBhr1100gBUhPmUu"
-              amount={totalAmount * 100} // Amount in cents
-              name="Hotel Booking"
-              description="Complete your booking"
-            /> */}
-            {/* </form> */}
-        {/* </div> */}
+        <StripePayment bookingDetails={{ ...bookingDetails, ...customerDetails, cartItems, totalAmount }} />
+
         
         </div>
 

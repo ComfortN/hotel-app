@@ -1,27 +1,59 @@
 import React, { useState } from 'react';
+import '../../styles/BookingForm.css';
+import { updateBookingDetails } from '../../redux/cartSlice';
+import { useDispatch } from 'react-redux';
 import { TextField, Button, MenuItem, InputLabel, Select, FormControl } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 
 export default function BookingForm() {
-    const [adults, setAdults] = useState(1);
-    const [children, setChildren] = useState(0);
-    const [checkInDate, setCheckInDate] = useState(null);
-    const [checkOutDate, setCheckOutDate] = useState(null);
 
-    const handleAdultsChange = (event) => {
-        setAdults(event.target.value);
+    // Initialize state for booking data with default values
+    const [bookingData, setBookingData] = useState({
+        checkInDate: dayjs(),
+        checkOutDate: dayjs().add(1, 'day'),
+        adults: 1,
+        children: 0,
+    });
+
+    const dispatch = useDispatch();
+
+
+     // Handle changes in input fields for adults and children
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setBookingData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
 
-    const handleChildrenChange = (event) => {
-        setChildren(event.target.value);
+
+    // Handle changes in date picker fields
+    const handleDateChange = (name) => (newValue) => {
+        setBookingData((prevState) => ({
+            ...prevState,
+            [name]: newValue,
+        }));
     };
 
+
+    // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Handle form submission logic
+
+        const bookingDataToSend = {
+            ...bookingData,
+            checkInDate: bookingData.checkInDate.toISOString(),
+            checkOutDate: bookingData.checkOutDate.toISOString(),
+        };
+        
+        dispatch(updateBookingDetails(bookingData));
     };
+
+
   return (
     <div className="booking-form">
             <form onSubmit={handleSubmit}>
@@ -29,8 +61,9 @@ export default function BookingForm() {
                     <InputLabel id="adults-label">Adults</InputLabel>
                     <Select
                         labelId="adults-label"
-                        value={adults}
-                        onChange={handleAdultsChange}
+                        name='adults'
+                        value={bookingData.adults}
+                        onChange={handleChange}
                     >
                         {[...Array(10).keys()].map(num => (
                             <MenuItem key={num} value={num + 1}>
@@ -44,8 +77,9 @@ export default function BookingForm() {
                     <InputLabel id="children-label">Children</InputLabel>
                     <Select
                         labelId="children-label"
-                        value={children}
-                        onChange={handleChildrenChange}
+                        name='children'
+                        value={bookingData.children}
+                        onChange={handleChange}
                     >
                         {[...Array(10).keys()].map(num => (
                             <MenuItem key={num} value={num}>
@@ -58,22 +92,25 @@ export default function BookingForm() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="Check-in Date"
-                        value={checkInDate}
-                        onChange={(newValue) => setCheckInDate(newValue)}
+                        name='checkInDate'
+                        value={bookingData.checkInDate}
+                        onChange={handleDateChange('checkInDate')}
                         renderInput={(params) => <TextField {...params} fullWidth margin="normal" />}
                     />
 
                     <DatePicker
                         label="Check-out Date"
-                        value={checkOutDate}
-                        onChange={(newValue) => setCheckOutDate(newValue)}
+                        name='checkOutDate'
+                        value={bookingData.checkOutDate}
+                        onChange={handleDateChange('checkOutDate')}
                         renderInput={(params) => <TextField {...params} fullWidth margin="normal" />}
                     />
                 </LocalizationProvider>
 
                 <Button type="submit" variant="contained" color="primary">
-                    Book Now
+                    Add to Cart
                 </Button>
+
             </form>
         </div>
     )

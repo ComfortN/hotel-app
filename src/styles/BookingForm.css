@@ -1,15 +1,22 @@
 .booking-form {
+    display: flex;
     padding: 20px;
-    background-color: #fff;
+    margin: 0 50px ;
+    background-color: #1e1e1e;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .booking-form form {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    width: 100%;
 }
 
+
 .booking-form .MuiFormControl-root {
-    margin-bottom: 16px;
+    background-color: white;
+    width: 30%;
 }

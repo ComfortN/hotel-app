@@ -6,10 +6,12 @@ import Footer from '../foooter/Footer';
 import roomImage1 from '../../assets/Modern Bed Back Wall Design Luxury.png';
 import roomImage2 from '../../assets/download.png';
 import { FaStar, FaHeart, FaRegHeart } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { fetchFavorites, addFavorite, removeFavorite, syncFavoritesToFirestore } from '../../redux/favoritesSlice';
 import { fetchAccommodationsAsync } from '../../redux/accommodationSlice';
 import { getAuth } from 'firebase/auth';
+import { addToCart } from '../../redux/cartSlice';
+
 
 
 export default function Accommodations() {
@@ -20,6 +22,20 @@ export default function Accommodations() {
     const auth = getAuth();
     const user = auth.currentUser;
     const userId = user ? user.uid : null;
+    const location = useLocation();
+    // const room = location.state?.room;
+
+
+    // Add room to cart
+    const handleBookNow = (room) => {
+        if (!room || !room.price) {
+            console.error('Invalid room object:', room);
+            return;
+        }
+        dispatch(addToCart(room));
+        navigate('/checkout');
+    };
+    
 
 
     //Fetch accommodations from Firestore
@@ -57,32 +73,7 @@ export default function Accommodations() {
     if (accommodationsStatus === 'loading') return <p>Loading...</p>;
     if (accommodationsStatus === 'failed') return <p>Error: {accommodationsError}</p>
 
-    const rooms = [
-        {
-            name: 'Royal Suite',
-            image: roomImage1,
-            price: '1500',
-            rating: 5.0,
-            amenities: ['Soap & pillow menu', 'Luxury toiletries', 'Evening Turndown', 'Private balcony'],
-        },
-        {
-            name: 'Serenity Villa',
-            image: roomImage2,
-            price: '1800',
-            rating: 5.0,
-            amenities: ['Soap & pillow menu', 'Luxury toiletries', 'Evening Turndown', 'Private balcony'],
-        },
-        {
-            name: 'Prestige Suite',
-            image: roomImage1,
-            price: '1500',
-            rating: 5.0,
-            amenities: ['Soap & pillow menu', 'Luxury toiletries', 'Evening Turndown', 'Private balcony'],
-        },
-    ];
-
-    // if (status === 'loading') return <p>Loading...</p>;
-    // if (status === 'failed') return <p>Error: {error}</p>;
+    
 
     return (
         <div className="accommodations-page">
@@ -118,7 +109,7 @@ export default function Accommodations() {
                                 </ul>
                                 <div className="accommodation-buttons">
                                     <Link to="/checkout">
-                                        <button className="book-now-btn">BOOK NOW</button>
+                                        <button className="book-now-btn" onClick={() => handleBookNow(room)}>BOOK NOW</button>
                                     </Link>
                                     <button
                                         className="learn-more-btn" onClick={() => handleLearnMore(room)}>
