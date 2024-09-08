@@ -11,7 +11,7 @@ import BookingForm from '../bookingForm/BookingForm';
 
 
 export default function Checkout() {
-  const { cartItems, totalAmount, bookingDetails } = useSelector((state) => state.cart);
+  const { cartItems, bookingDetails } = useSelector((state) => state.cart);
 
   const [customerDetails, setCustomerDetails] = useState({
     firstName: '',
@@ -21,8 +21,6 @@ export default function Checkout() {
     address: '',
     city: '',
     zipCode: '',
-    totalAmount,
-    cartItems,
   });
 
   const dispatch = useDispatch();
@@ -35,25 +33,33 @@ export default function Checkout() {
   };
 
 
-  const handleCheckout = () => {
-    const fullBookingDetails = {
-      ...bookingDetails,
-      ...customerDetails,
-      cartItems,
-      totalAmount,
-    };
+  // Function to calculate total amount dynamically
+  const calculateTotalAmount = () => {
+    const { checkInDate, checkOutDate, pricePerNight, rooms } = bookingDetails;
+    
+    if (!checkInDate || !checkOutDate || !pricePerNight || !rooms) {
+        console.error('Missing booking details for total amount calculation');
+        return 0;
+    }
+    
+    const checkIn = new Date(checkInDate);
+    const checkOut = new Date(checkOutDate);
+    const numberOfNights = (checkOut - checkIn) / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+    
+    // Ensure pricePerNight and rooms are numbers
+    const price = parseFloat(pricePerNight);
+    const numRooms = parseInt(rooms, 10);
+    
+    if (isNaN(price) || isNaN(numRooms) || isNaN(numberOfNights)) {
+        console.error('Invalid price or number of rooms:', price, numRooms, numberOfNights);
+        return 0;
+    }
+    
+    return (price * numberOfNights * numRooms).toFixed(2);
+};
 
-    // Dispatch createBooking action with fullBookingDetails here
-    // dispatch(createBooking(fullBookingDetails));
-  };
 
-
-  const fullBookingDetails = {
-    ...bookingDetails,
-    ...customerDetails,
-    cartItems,
-    totalAmount,
-  };
+const totalAmount = calculateTotalAmount();
 
 
 return (
@@ -107,6 +113,7 @@ return (
                   {item.name} - {item.price}
                   <div><strong>Adults:</strong> {bookingDetails.adults}</div>
                 <div><strong>Children:</strong> {bookingDetails.children}</div>
+                <div><strong>Rooms:</strong> {bookingDetails.rooms}</div>
                 <div><strong>Check-In:</strong> {new Date(bookingDetails.checkInDate).toLocaleDateString()}</div>
                 <div><strong>Check-Out:</strong> {new Date(bookingDetails.checkOutDate).toLocaleDateString()}</div>
               </li>

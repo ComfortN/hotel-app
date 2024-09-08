@@ -32,7 +32,7 @@ export default function Accommodations() {
             console.error('Invalid room object:', room);
             return;
         }
-        dispatch(addToCart(room));
+        dispatch(addToCart({ ...room, pricePerNight: room.price }));
         navigate('/checkout');
     };
     

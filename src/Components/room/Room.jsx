@@ -17,7 +17,7 @@ export default function RoomDetails() {
 
     // Add room to cart
     const handleBookNow = () => {
-        dispatch(addToCart(room));
+        dispatch(addToCart({ ...room, pricePerNight: room.price }));
         navigate('/checkout');
     }
 

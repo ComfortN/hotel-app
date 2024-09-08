@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../styles/BookingForm.css';
 import { updateBookingDetails } from '../../redux/cartSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, MenuItem, InputLabel, Select, FormControl } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -10,12 +10,18 @@ import dayjs from 'dayjs';
 
 export default function BookingForm() {
 
+    // Fetch pricePerNight from the Redux store
+    const { pricePerNight } = useSelector((state) => state.cart.selectedRoom) || { pricePerNight: 0 };
+
+
     // Initialize state for booking data with default values
     const [bookingData, setBookingData] = useState({
         checkInDate: dayjs(),
         checkOutDate: dayjs().add(1, 'day'),
         adults: 1,
         children: 0,
+        pricePerNight,
+        rooms:1
     });
 
     const dispatch = useDispatch();
@@ -44,10 +50,15 @@ export default function BookingForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        // Calculate total price
+        const numberOfNights = bookingData.checkOutDate.diff(bookingData.checkInDate, 'day');
+        const totalPrice = numberOfNights * bookingData.pricePerNight * bookingData.rooms;
+
         const bookingDataToSend = {
             ...bookingData,
             checkInDate: bookingData.checkInDate.toISOString(),
             checkOutDate: bookingData.checkOutDate.toISOString(),
+            totalPrice,
         };
         
         dispatch(updateBookingDetails(bookingData));
@@ -84,6 +95,22 @@ export default function BookingForm() {
                         {[...Array(10).keys()].map(num => (
                             <MenuItem key={num} value={num}>
                                 {num}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+                <FormControl fullWidth margin="normal">
+                    <InputLabel id="rooms-label">Rooms</InputLabel>
+                    <Select
+                        labelId="rooms-label"
+                        name='rooms'
+                        value={bookingData.rooms}
+                        onChange={handleChange}
+                    >
+                        {[...Array(10).keys()].map(num => (
+                            <MenuItem key={num} value={num + 1}>
+                                {num + 1}
                             </MenuItem>
                         ))}
                     </Select>
