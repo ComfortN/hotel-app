@@ -1,6 +1,7 @@
 import React from 'react'
 import '../../styles/DiscoverAccommodation.css';
 import suiteImage from '../../assets/Modern Bed Back Wall Design Luxury.png';
+import { Link } from 'react-router-dom';
 
 export default function DiscoverAccommodation() {
     return (
@@ -18,7 +19,10 @@ export default function DiscoverAccommodation() {
                         Whether you're seeking a cozy room with modern amenities or a lavish villa with breathtaking views,
                         we have something to suit every taste.
                     </p>
-                    <button className="view-accommodation-btn">View Accommodations</button>
+                    <Link to={'/accommodations'}>
+                        <button className="view-accommodation-btn">View Accommodations</button>
+                    </Link>
+                    
                     </div>
                     
                     

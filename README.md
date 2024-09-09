@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# Hotel App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+The LuxeStay Hotel App is a comprehensive solution for managing hotel accommodations. It features user authentication, accommodation listings, booking functionality, user profiles, an admin panel, and more. The app utilizes Firebase for backend services and Redux for state management.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### User Authentication
+- **Register and Login**: Users can register and log in using Firebase Authentication.
 
-### `npm start`
+### Accommodation Listings
+- **View Accommodations**: Users can view available accommodations.
+- **Accommodation Details**:
+  - **Photo Gallery**: View images of the hotel.
+  - **Map**: See the location of the hotel.
+  - **Price Details**: View cost per night and other pricing information.
+  - **Basic Information**: Address, star rating, and other relevant details.
+  - **Hotel Facilities & Policies**: Amenities offered and policies.
+  - **Call-to-Action Button**: Book or view more details.
+  - **Sharing Button**: Share accommodation details.
+  - **Favourites Button**: Save accommodations to favourites.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Booking Functionality
+- **Booking Process**:
+  - Select check-in and check-out dates.
+  - Specify number of rooms and guests.
+  - Enter Customer Details
+- **Payment Integration**: Supports payments through Stripe gateway.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### User Profile
+- **Profile Management**: View and edit user profile details.
+- **Booking History**: View past bookings.
+- **Favourites**: Manage favourite accommodations.
+- **Reviews**: Manage reviews.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Data Storage
+- **Backend**: Firebase Firestore/Real-time for storing accommodation listings, user data, booking information, etc.
 
-### `npm run build`
+### State Management
+- **Redux**: Manage application state.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Scalability & Performance
+- **Scalability**: Designed to handle a large number of users and accommodations.
+- **Performance**: Optimized for a smooth user experience.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Responsive Design
+- The app is responsive and optimized for different devices and screen sizes.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Installation
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Clone the repository:
+   ```
+   git clone https://github.com/ComfortN/hotel-app.git
+    cd hotel-app
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Install dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    ```
+        npm install
+    ```
 
-## Learn More
+3. Start the app:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    ```
+        npm start
+    ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+* Frontend: React, Redux, React-icons
+* Backend: Firebase Firestore, Firebase Authentication
+* Payments: (Stripe)
+* State Management: Redux
+* Routing: React Router
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## UI/UX Designs
 
-### Making a Progressive Web App
+### The design
+    https://www.figma.com/design/GFn9GO5osA3TM5GKs4AI46/Hotel-App-design?node-id=0-1&t=a3T6iQDkoXlE4z4T-1
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### The Wireframe
+    https://www.figma.com/design/dFWzTddo2tl9GPcwLjjocx/HOTEL-WIREFRAME?node-id=6-160&t=JQe4KXP4wCIrwmx8-1
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### The flows
+    https://www.figma.com/board/DkIeaYJeuqm2ki4n21JY6u/Hotel-App-Flows?node-id=0-1&t=2X5moy4eXfqRHd1c-1 (edited)
