@@ -1,25 +1,56 @@
 import React from 'react'
 import '../../styles/RoomDetails.css';
 import roomImage from '../../assets/download.png';
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaHeart, FaRegHeart, FaShareAlt } from 'react-icons/fa';
 import Banner from '../baner/Banner';
 import Footer from '../foooter/Footer';
 import { FaWifi, FaConciergeBell, FaUtensils, FaSwimmingPool } from 'react-icons/fa';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { addToCart } from '../../redux/cartSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavorite, removeFavorite, fetchFavorites } from '../../redux/favoritesSlice';
+import { getAuth } from 'firebase/auth';
 
 export default function RoomDetails() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const room = location.state?.room;
+    const { favorites } = useSelector((state) => state.favorites);
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const userId = user ? user.uid : null;
 
     // Add room to cart
     const handleBookNow = () => {
         dispatch(addToCart({ ...room, pricePerNight: room.price }));
         navigate('/checkout');
     }
+
+
+    // Toggle favorite
+    const toggleFavorite = () => {
+        if (favorites.includes(room.name)) {
+            dispatch(removeFavorite(room.name));
+        } else {
+            dispatch(addFavorite(room.name));
+        }
+    };
+
+    // Share room details
+    const handleShare = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: room.name,
+                text: room.description,
+                url: window.location.href
+            })
+            .then(() => console.log('Share successful'))
+            .catch((error) => console.log('Share failed', error));
+        } else {
+            console.log('Web Share API not supported.');
+        }
+    };
 
 
     if (!room) {
@@ -75,8 +106,18 @@ export default function RoomDetails() {
 
                     <div className="room-buttons">
                     <button className="book-now-btn" onClick={handleBookNow}>
-                                    BOOK NOW
-                                </button>
+                        BOOK NOW
+                    </button>
+
+                    <button
+                        className={`favorite-btn ${favorites.includes(room.name) ? 'favorited' : ''}`}
+                        onClick={toggleFavorite}
+                    >
+                        {favorites.includes(room.name) ? <FaHeart /> : <FaRegHeart />}
+                    </button>
+                    <button className="share-btn" onClick={handleShare}>
+                        <FaShareAlt />
+                    </button>
                         
                     </div>
                     </div>

@@ -5,7 +5,7 @@ import Banner from '../baner/Banner';
 import Footer from '../foooter/Footer';
 import roomImage1 from '../../assets/Modern Bed Back Wall Design Luxury.png';
 import roomImage2 from '../../assets/download.png';
-import { FaStar, FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaStar, FaHeart, FaRegHeart, FaShareAlt } from 'react-icons/fa';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { fetchFavorites, addFavorite, removeFavorite, syncFavoritesToFirestore } from '../../redux/favoritesSlice';
 import { fetchAccommodationsAsync } from '../../redux/accommodationSlice';
@@ -70,6 +70,21 @@ export default function Accommodations() {
         navigate('/room-details', { state: { room } });
     };
 
+
+    const handleShare = (room) => {
+        if (navigator.share) {
+            navigator.share({
+                title: room.name,
+                text: room.description,
+                url: window.location.href
+            })
+            .then(() => console.log('Share successful'))
+            .catch((error) => console.log('Share failed', error));
+        } else {
+            console.log('Web Share API not supported.');
+        }
+    };
+
     if (accommodationsStatus === 'loading') return <p>Loading...</p>;
     if (accommodationsStatus === 'failed') return <p>Error: {accommodationsError}</p>
 
@@ -120,6 +135,9 @@ export default function Accommodations() {
                                         onClick={() => toggleFavorite(room.name)}
                                     >
                                         {favorites.includes(room.name) ? <FaHeart /> : <FaRegHeart />}
+                                    </button>
+                                    <button className="share-btn" onClick={() => handleShare(room)}>
+                                        <FaShareAlt />
                                     </button>
                                 </div>
                             </div>
