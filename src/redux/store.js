@@ -4,6 +4,7 @@ import accommodationReducer from './accommodationSlice';
 import favoritesSlice from './favoritesSlice';
 import cartReducer from './cartSlice';
 import bookingReducer from './bookingSlice'
+import galleryReducer from './gallerySlice'
 
 const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
         favorites: favoritesSlice,
         cart: cartReducer,
         booking: bookingReducer,
+        gallery: galleryReducer,
     },
 });
 
