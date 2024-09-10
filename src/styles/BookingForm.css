@@ -1,4 +1,4 @@
-.booking-form {
+.bookings-form {
     display: flex;
     padding: 20px;
     margin: 0 50px ;
@@ -7,7 +7,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.booking-form form {
+.bookings-form form {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +16,34 @@
 }
 
 
-.booking-form .MuiFormControl-root {
+.bookings-form .MuiFormControl-root {
     background-color: white;
-    width: 30%;
+    width: 100%;
+    position: static;
+}
+
+.bookings-form .MuiButton-root {
+    position: static;
+}
+
+
+@media (max-width: 768px) {
+    .bookings-form {
+        display: flex !important;
+        flex-direction: column;
+        width: 80%;
+        margin: 0 10px ;
+    }
+    .bookings-form form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        gap: 0.8em;
+    }
+
+    .bookings-form .MuiButton-root {
+        font-size: 0.8rem;
+        width: 100% !important;
+        height: 100% !important;
+    }
 }

@@ -77,7 +77,7 @@
 .menu-toggle {
     display: none;
     cursor: pointer;
-    color: black;
+    color: white;
     z-index: 1000;
 }
 

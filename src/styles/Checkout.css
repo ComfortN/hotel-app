@@ -173,3 +173,65 @@ margin-bottom: 20px;
 .policies-container ul li strong {
     color: #000;
 }
+
+
+
+
+@media (max-width: 768px) {
+    .checkout-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2em;
+    }
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .checkout-details, .order-summary {
+        width: 100%;
+    }
+
+    .payment-container, .policies-container {
+        width: 80%;
+        margin: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-container {
+        padding: 20px;
+    }
+
+    .checkout-details, .order-summary {
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* .payment-container, .policies-container {
+        width: 100%;
+        
+    } */
+
+
+
+    .policies-container li{
+        font-size: 0.8rem;
+    }
+
+    .form-group input {
+        padding: 8px;
+        width: 90%;
+    }
+
+    .checkout-button {
+        padding: 10px;
+    }
+
+    .confirm-button {
+        padding: 8px;
+    }
+}

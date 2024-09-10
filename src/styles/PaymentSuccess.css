@@ -66,3 +66,37 @@
 .download-button:hover {
     background-color: #555;
 }
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .payment-success-container{
+        margin: 5px;
+        padding: 10px;
+        width: 80%;
+    }
+    .success-icon {
+        font-size: 6rem;
+    }
+
+    .payment-receipt {
+        padding: 2px;
+
+    }
+
+    .receipt-details {
+        font-size: 0.8rem;
+    }
+
+    
+
+    .actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .profile-button,
+    .download-button {
+        width: 100%;
+    }
+}

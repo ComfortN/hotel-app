@@ -77,13 +77,20 @@
 }
 
 .profile-sections {
-    display: flex;
+    width: 95%;
     gap: 2em;
+}
+
+.profile-section ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
 }
 
 .profile-section {
     background-color: #383c3e;
     padding: 20px;
+    margin: 10px 0;
     border-radius: 10px;
     width: 100%;
 }
@@ -100,4 +107,61 @@
 
 .profile-section ul li {
     margin-bottom: 10px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .profile-page-container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-header h1 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .edit-btn,
+    .save-btn,
+    .cancel-btn {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+
+    .profile-details {
+        padding: 15px;
+    }
+
+    .profile-details h2 {
+        font-size: 1.3em;
+    }
+
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .detail-item label,
+    .detail-item p,
+    .detail-item input {
+        width: 100%;
+    }
+
+    .profile-sections {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .profile-section {
+        padding: 15px;
+    }
+
+    .profile-section h2 {
+        font-size: 1.3em;
+    }
 }

@@ -102,14 +102,23 @@
 @media (max-width: 768px) {
     .footer-links{
         flex-direction: column;
-        margin: 15px 0;
+        margin: 10px 0;
     }
 }
 
 @media (max-width: 480px) {
     .nav-link {
         padding: 0;
-        flex-wrap: wrap;
+        /* flex-wrap: wrap; */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 0 15px;
+        align-items: center;
+        gap: 1em;
+    }
+
+    .nav-link li {
+        text-align: center;
     }
 
 }
