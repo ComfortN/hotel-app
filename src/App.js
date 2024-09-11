@@ -11,6 +11,8 @@ import PaymentSuccess from './Components/payment/PaymentSuccess';
 import ContactUs from './Components/contactUs/ContactUs';
 import AboutUs from './Components/aboutUs/AboutUs';
 import ProfilePage from './Components/profilePage/ProfilePage';
+import Gallery from './Components/gallery/Gallery';
+import ReviewForm from './Components/reviews/ReviewForm';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path='/contact-us' element={<ContactUs />} />
         <Route path='/about-us' element={<AboutUs />} />
         <Route path='/profile-page' element={<ProfilePage />} />
+        <Route path='gallery' element={<Gallery />} />
+        <Route path="/review/:bookingId" element={<ReviewForm />} />
       </Routes>
     </Router>
     

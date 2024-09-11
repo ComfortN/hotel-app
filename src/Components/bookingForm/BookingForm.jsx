@@ -66,7 +66,7 @@ export default function BookingForm() {
 
 
   return (
-    <div className="booking-form">
+    <div className="bookings-form">
             <form onSubmit={handleSubmit}>
                 <FormControl fullWidth margin="normal">
                     <InputLabel id="adults-label">Adults</InputLabel>
@@ -134,7 +134,7 @@ export default function BookingForm() {
                     />
                 </LocalizationProvider>
 
-                <Button type="submit" variant="contained" color="primary">
+                <Button type="submit" variant="contained" style={{background: "black", width: '70%', height: '70%'}}>
                     Add to Cart
                 </Button>
 
