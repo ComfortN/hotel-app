@@ -44,6 +44,7 @@ export default function Navbar() {
           <Link to='/about-us'><li>About</li></Link>
           <Link to='/accommodations'><li>Accommodation</li></Link>
           <Link to='/contact-us'><li>Contact</li></Link>
+          <Link to='/gallery'><li>Gallery</li></Link>
         </ul>
 
         <div className="nav-actions">
@@ -73,6 +74,7 @@ export default function Navbar() {
           <Link to="/about-us" onClick={toggleSidebar}><li>About</li></Link>
           <Link to="/accommodations" onClick={toggleSidebar}><li>Accommodation</li></Link>
           <Link to="/contact-us" onClick={toggleSidebar}><li>Contact</li></Link>
+          <Link to="/gallery" onClick={toggleSidebar}><li>Gallery</li></Link>
           <li>
             <Link to={'/profile-page'} onClick={toggleSidebar}>
               Profile
