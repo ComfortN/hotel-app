@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
 import { auth } from '../../firebase/firebase';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -12,6 +12,7 @@ export default function Signin() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
 
   // Function to handle signin form submission
@@ -22,7 +23,8 @@ export default function Signin() {
       const usercredentals = await signInWithEmailAndPassword(auth, email, password);
       dispatch(setUser(usercredentals.user))
       alert('successfull login')
-      navigate("/");
+      const redirectTo = location.state?.from?.pathname || '/';
+      navigate(redirectTo);
     } catch (error) {
       console.error("Error signing in:", error.message);
       alert(error.message);

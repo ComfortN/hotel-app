@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import '../../styles/Checkout.css';
 import Navbar from '../navbar/Navbar';
 import Footer from '../foooter/Footer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {createBooking} from '../../redux/bookingSlice'
 import StripeCheckout from 'react-stripe-checkout';
@@ -26,11 +26,12 @@ export default function Checkout() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
 
   useEffect(() => {
     if (!user) {
-      navigate('/signin');
+      navigate('/signin',{ state: { from: location } });
     }
   }, [user, navigate]);
 
@@ -68,6 +69,20 @@ export default function Checkout() {
 
 
 const totalAmount = calculateTotalAmount();
+
+
+// Check if user is null and handle it appropriately
+  if (!user) {
+    return (
+      <div className="checkout-page">
+        <Navbar />
+        <div className="checkout-container">
+          <h2>Please sign in to proceed with the checkout</h2>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
 
 const bookingDetailsWithUserId = {

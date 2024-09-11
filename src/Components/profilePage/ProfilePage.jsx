@@ -6,6 +6,8 @@ import { auth, database } from '../../firebase/firebase';
 import { getUserFromFirestore, updateUserInFirestore } from '../../firebase/firestoreUtils';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchBookings } from '../../redux/bookingSlice';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import BookingCard from './BookingCard';
 
 
 const getFavoritesFromLocalStorage = () => {
@@ -15,8 +17,8 @@ const getFavoritesFromLocalStorage = () => {
 
 export default function ProfilePage() {
     const dispatch = useDispatch();
-    // const { bookings} = useSelector((state) => state.bookings);
-    const { bookings = [] } = useSelector((state) => state.bookings || {});
+    const bookings = useSelector((state) => state.booking.bookings || {});
+    const { user } = useSelector((state) => state.user);
 
 
     const [isEditing, setIsEditing] = useState(false);
@@ -29,6 +31,14 @@ export default function ProfilePage() {
     });
 
     const [favorites, setFavorites] = useState([]);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+          navigate('/signin',{ state: { from: location } });
+        }
+      }, [user, navigate]);
 
 
     useEffect(() => {
@@ -72,6 +82,10 @@ export default function ProfilePage() {
 
     const handleEditClick = () => {
         setIsEditing(true);
+    };
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString();
     };
 
     const handleSaveClick = async () => {
@@ -162,10 +176,8 @@ export default function ProfilePage() {
                     <div className="profile-section">
                         <h2>My Bookings</h2>
                         <ul>
-                            {bookings.length ? bookings.map((booking) => (
-                                <li key={booking.id}>
-                                    Booking {booking.id} - {booking.checkInDate} to {booking.checkOutDate}
-                                </li>
+                            {bookings.length > 0 ? bookings.map((booking) => (
+                                <BookingCard key={booking.id} booking={booking} /> 
                             )) : <p>No bookings found.</p>}
                         </ul>
                     </div>
