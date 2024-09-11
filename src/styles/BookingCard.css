@@ -73,3 +73,33 @@
     border: none;
     margin: 15px;
 }
+
+
+@media (min-width: 768px) {
+    .booking-card {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .booking-image {
+        width: 50%;
+        max-height: 250px;
+    }
+
+    .booking-details {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 20px;
+    }
+
+    .booking-details h3, .booking-details p, .booking-rating, .review-btn {
+        text-align: left;
+    }
+
+    .rating-display {
+        position: static;
+        margin-left: 10px;
+    }
+}

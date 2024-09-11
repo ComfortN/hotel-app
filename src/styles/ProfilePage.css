@@ -164,4 +164,9 @@
     .profile-section h2 {
         font-size: 1.3em;
     }
+
+    
+.profile-section ul {
+    grid-template-columns: 1fr;
+}
 }
