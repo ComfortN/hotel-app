@@ -1,28 +1,21 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import '../../styles/Reviews.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchReviews } from '../../redux/bookingSlice';
 import { FaStar, FaQuoteLeft, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 export default function Reviews() {
-    const reviews = [
-        {
-            name: 'Comfort',
-            rating: 5,
-            text: 'Amazing experience! The service was exceptional, and the rooms were luxurious. Highly recommend!'
-        },
-        {
-            name: 'Nqobile',
-            rating: 4,
-            text: 'Beautiful hotel with top-notch amenities. The food was excellent. Will visit again!'
-        },
-        {
-            name: 'Phumzile',
-            rating: 5,
-            text: 'Great location and very comfortable stay. The staff was very friendly and helpful.'
-        }
-    ];
+    const dispatch = useDispatch();
+    const reviews = useSelector((state) => state.booking.reviews || []);
 
     const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
+
+    useEffect(() => {
+        dispatch(fetchReviews());
+    }, [dispatch]);
+
+    console.log('reviews:',reviews)
     const nextReview = () => {
         setCurrentReviewIndex((prevIndex) => (prevIndex + 1) % reviews.length);
     };
@@ -32,6 +25,11 @@ export default function Reviews() {
             prevIndex === 0 ? reviews.length - 1 : prevIndex - 1
         );
     };
+
+
+    if (reviews.length === 0) {
+        return <div>Loading reviews...</div>;
+    }
 
     const { name, rating, text } = reviews[currentReviewIndex];
 

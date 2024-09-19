@@ -52,7 +52,7 @@ export default function BookingCard({ booking }) {
 
     return (
         <div className="booking-card">
-            <div className="booking-details">
+            <div className="bookingss-details">
                 {booking.cartItems[0]?.image && (
                     <img src={booking.cartItems[0]?.image} alt="Accommodation" className="booking-image" />
                 )}

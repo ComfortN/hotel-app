@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { database } from '../firebase/firebase';
-import { collection, addDoc, updateDoc, doc, getDocs, query, where } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
 
 export const fetchBookings = createAsyncThunk(
   'bookings/fetchBookings',
@@ -10,6 +10,59 @@ export const fetchBookings = createAsyncThunk(
     const bookings = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     console.log('fetched', bookings)
     return bookings;
+  }
+);
+
+
+// Fetch Reviews
+// Fetch Reviews (all or user-specific based on userId)
+export const fetchReviews = createAsyncThunk(
+  'reviews/fetchReviews',
+  async (userId = null) => {
+    try {
+      let q;
+      if (userId) {
+        // Fetch user-specific reviews
+        q = query(collection(database, 'reviews'), where('userId', '==', userId));
+      } else {
+        // Fetch all reviews
+        q = collection(database, 'reviews');
+      }
+      
+      const querySnapshot = await getDocs(q);
+      const reviews = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      return reviews;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+);
+
+
+// Delete Review
+export const deleteReview = createAsyncThunk(
+  'reviews/deleteReview',
+  async (reviewId) => {
+    try {
+      await deleteDoc(doc(database, 'reviews', reviewId));
+      return reviewId;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+);
+
+// Update Review
+export const updateReview = createAsyncThunk(
+  'reviews/updateReview',
+  async (review) => {
+    try {
+      const reviewRef = doc(database, 'reviews', review.id);
+      await updateDoc(reviewRef, review);
+      return review;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 );
 
@@ -83,6 +136,18 @@ const bookingSlice = createSlice({
       .addCase(addReview.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
       })
+      .addCase(fetchReviews.fulfilled, (state, action) => {
+        state.reviews = (action.payload);
+      })
+      .addCase(updateReview.fulfilled, (state, action) => {
+        const index = state.reviews.findIndex(review => review.id === action.payload.id);
+        if (index !== -1) {
+          state.reviews[index] = action.payload;
+        }
+      })
+      .addCase(deleteReview.fulfilled, (state, action) => {
+        state.reviews = state.reviews.filter(review => review.id !== action.payload);
+      })
       .addCase(addBooking.rejected, (state, action) => {
         state.error = action.error.message; // Handle errors
       })
@@ -91,6 +156,12 @@ const bookingSlice = createSlice({
       })
       .addCase(addReview.rejected, (state, action) => {
         state.error = action.error.message; // Handle errors
+      })
+      .addCase(updateReview.rejected, (state, action) => {
+        state.error = action.error.message; //Handle errors
+      })
+      .addCase(deleteReview.rejected, (state, action) => {
+        state.error = action.error.message; //Handle errors
       });
 
   },

@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addReview } from '../../redux/bookingSlice';
-import { addDoc, collection } from 'firebase/firestore';
+import { addReview, updateReview } from '../../redux/bookingSlice';
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 import { database, auth } from '../../firebase/firebase';
 import { FaStar } from 'react-icons/fa';
 import '../../styles/ReviewForm.css';
 import { getUserFromFirestore } from '../../firebase/firestoreUtils';
 
+
 export default function ReviewForm() {
     const { bookingId } = useParams();
+    const location = useLocation();
     const dispatch = useDispatch();
     const [user, setUser] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
 
+    // Initialize review state with empty values
     const [review, setReview] = useState({
         name: '',
         text: '',
@@ -36,6 +41,13 @@ export default function ReviewForm() {
         fetchUser();
     }, []);
 
+    useEffect(() => {
+        // Check if there's review data passed through state
+        if (location.state && location.state.review) {
+            setReview(location.state.review);
+        }
+    }, [location.state]);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setReview({ ...review, [name]: value });
@@ -45,33 +57,46 @@ export default function ReviewForm() {
         setReview({ ...review, rating: newRating });
     };
 
-    console.log(user)
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);  // Disable button during submission
+    
         if (user) {
-            const reviewData = {
-                bookingId,
-                userId: user.id,
-                userName: user.firstName,
-                ...review,
-                createdAt: new Date()
-            };
-
             try {
-                await addDoc(collection(database, 'reviews'), reviewData);
-                dispatch(addReview(reviewData));
+                if (review.id) {
+                    // Update existing review
+                    await dispatch(updateReview({ ...review, updatedAt: new Date() })).unwrap();
+                    navigate('/profile-page');
+                } else {
+                    // Add new review
+                    const reviewData = {
+                        bookingId,
+                        userId: user.id,
+                        userName: user.firstName,
+                        ...review,
+                        createdAt: new Date()
+                    };
+                    await dispatch(addReview(reviewData)).unwrap();
+                    navigate('/profile-page');
+                }
             } catch (error) {
                 console.error('Error submitting review:', error);
+            } finally {
+                setIsSubmitting(false);  // Re-enable button after submission
             }
         } else {
             console.error('User data is not available');
+            setIsSubmitting(false);
         }
     };
 
+    console.log(review)
+
     return (
         <div className="review-form">
-            <h2>Write a Review</h2>
+            <h2>{review.id ? 'Edit Review' : 'Write a Review'}</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Review Name:
@@ -93,7 +118,7 @@ export default function ReviewForm() {
                         ))}
                     </div>
                 </label>
-                <button type="submit" disabled={!user}>Submit Review</button>
+                <button type="submit" disabled={!user || isSubmitting}>Submit Review</button>
             </form>
         </div>
     );

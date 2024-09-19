@@ -110,6 +110,39 @@
 }
 
 
+.review-item {
+    background-color: #383c3e;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-content {
+    flex: 1;
+}
+
+.review-rating {
+    color: gold;
+    margin-bottom: 10px;
+}
+
+.review-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.review-actions button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+
 @media screen and (max-width: 768px) {
     .profile-page-container {
         width: 95%;

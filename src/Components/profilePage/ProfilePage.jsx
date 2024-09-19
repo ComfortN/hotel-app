@@ -5,9 +5,10 @@ import Footer from '../foooter/Footer';
 import { auth, database } from '../../firebase/firebase';
 import { getUserFromFirestore, updateUserInFirestore } from '../../firebase/firestoreUtils';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchBookings } from '../../redux/bookingSlice';
+import { fetchBookings, fetchReviews, deleteReview, updateReview } from '../../redux/bookingSlice';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import BookingCard from './BookingCard';
+import { FaEdit, FaTrashAlt, FaStar } from 'react-icons/fa';
 
 
 const getFavoritesFromLocalStorage = () => {
@@ -18,6 +19,7 @@ const getFavoritesFromLocalStorage = () => {
 export default function ProfilePage() {
     const dispatch = useDispatch();
     const bookings = useSelector((state) => state.booking.bookings || {});
+    const reviews = useSelector((state) => state.booking.reviews || []);
     const { user } = useSelector((state) => state.user);
 
 
@@ -50,6 +52,7 @@ export default function ProfilePage() {
                     const userData = await getUserFromFirestore(currentUser.uid);
                     if (userData) {
                         dispatch(fetchBookings(currentUser.uid));
+                        dispatch(fetchReviews(currentUser.uid));
                         setUserData({
                             firstName: userData.firstName || "",
                             lastName: userData.lastName || "",
@@ -102,8 +105,19 @@ export default function ProfilePage() {
         }
     };
 
+    console.log(reviews)
+
     const handleCancelClick = () => {
         setIsEditing(false);
+    };
+
+
+    const handleDeleteReview = (reviewId) => {
+        dispatch(deleteReview(reviewId));
+    };
+
+    const handleEditReview = (review) => {
+        navigate(`/review/${review.id}`, { state: { review } });
     };
 
     return (
@@ -186,7 +200,7 @@ export default function ProfilePage() {
                         <h2>My Favorites</h2>
                         <ul>
                             {favorites.map((favorite, index) => (
-                                <li key={index}>Favorite {favorite}</li>
+                                <li key={`${favorite}-${index}`}>Favorite {favorite}</li>
                             ))}
                         </ul>
                     </div>
@@ -194,8 +208,30 @@ export default function ProfilePage() {
                     <div className="profile-section">
                         <h2>My Reviews</h2>
                         <ul>
-                            <li>Review 1 - "Great service!"</li>
-                            <li>Review 2 - "Amazing experience!"</li>
+                            {reviews.length > 0 ? reviews.map((review) => (
+                                <li key={review.id} className="review-item">
+                                    <div className="review-content">
+                                        <div className="review-rating">
+                                            {[...Array(review.rating || 0)].map((_, index) => (
+                                                <FaStar key={index} />
+                                            ))}
+                                        </div>
+                                        <h3>{review.name || 'No Name'}</h3>
+                                        <p>{review.text || 'No review text'}</p>
+                                        <p>{new Date(review.createdAt).toLocaleDateString() || 'N/A'}</p>
+                                    </div>
+                                    <div className="review-actions">
+                                        <button onClick={() => handleEditReview(review)}>
+                                            <FaEdit />
+                                        </button>
+                                        <button onClick={() => handleDeleteReview(review.id)}>
+                                            <FaTrashAlt />
+                                        </button>
+                                    </div>
+                                </li>
+                            )) : (
+                                <p>No reviews found.</p>
+                            )}
                         </ul>
                     </div>
                 </div>
