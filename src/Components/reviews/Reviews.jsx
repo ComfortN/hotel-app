@@ -44,9 +44,9 @@ export default function Reviews() {
                 <div className="review-header">
                     <h3>{name}</h3>
                     <div className="review-rating">
-                        {[...Array(rating)].map((star, i) => (
-                            <FaStar key={i} className="star" />
-                        ))}
+                    {[...Array(rating || 0)].map((_, index) => (
+                        <FaStar key={index} />
+                    ))}
                     </div>
                 </div>
                 <p className="review-text">"{text}"</p>
