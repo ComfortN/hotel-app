@@ -13,6 +13,7 @@ import BookingForm from '../bookingForm/BookingForm';
 export default function Checkout() {
   const { cartItems, bookingDetails } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const [customerDetails, setCustomerDetails] = useState({
     firstName: '',
@@ -34,7 +35,7 @@ export default function Checkout() {
       navigate('/signin',{ state: { from: location } });
     }
   }, [user, navigate]);
-
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,33 +43,62 @@ export default function Checkout() {
   };
 
 
+  useEffect(() => {
+    const calculatedTotal = calculateTotalAmount();
+    setTotalAmount(calculatedTotal);
+    console.log('Calculated Total:', calculatedTotal);
+  }, [bookingDetails]);
+
+
   // Function to calculate total amount dynamically
   const calculateTotalAmount = () => {
-    const { checkInDate, checkOutDate, pricePerNight, rooms } = bookingDetails;
-    
-    if (!checkInDate || !checkOutDate || !pricePerNight || !rooms) {
-        console.error('Missing booking details for total amount calculation');
-        return 0;
+    if (!cartItems || cartItems.length === 0) {
+      console.error('No items in cart');
+      return 0;
     }
-    
+
+    const { checkInDate, checkOutDate, rooms } = bookingDetails;
+
+    if (!checkInDate || !checkOutDate || !rooms) {
+      console.error('Missing booking details for total amount calculation');
+      return 0;
+    }
+
     const checkIn = new Date(checkInDate);
     const checkOut = new Date(checkOutDate);
-    const numberOfNights = (checkOut - checkIn) / (1000 * 60 * 60 * 24); // Convert milliseconds to days
-    
-    // Ensure pricePerNight and rooms are numbers
-    const price = parseFloat(pricePerNight);
-    const numRooms = parseInt(rooms, 10);
-    
-    if (isNaN(price) || isNaN(numRooms) || isNaN(numberOfNights)) {
-        console.error('Invalid price or number of rooms:', price, numRooms, numberOfNights);
-        return 0;
+
+    if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) {
+      console.error('Invalid date format for check-in or check-out date');
+      return 0;
     }
-    
-    return (price * numberOfNights * numRooms).toFixed(2);
-};
+
+    const numberOfNights = Math.max(1, Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)));
+    const numRooms = parseInt(rooms, 10);
+    console.log(checkIn, checkIn)
+
+    if (isNaN(numRooms) || numberOfNights <= 0) {
+      console.error('Invalid number of rooms or number of nights:', numRooms, numberOfNights);
+      return 0;
+    }
+
+    console.log('nn', numberOfNights)
+
+    const totalPrice = cartItems.reduce((total, item) => {
+      const price = parseFloat(item.price);
+      if (isNaN(price)) {
+        console.error('Invalid price for item:', item);
+        console.log('pp: ',price)
+        return total;
+      }
+      return total + price;
+    }, 0);
+
+    console.log('Calculation details:', { totalPrice, numberOfNights, numRooms });
+    return (totalPrice * numberOfNights * numRooms).toFixed(2);
+  };
 
 
-const totalAmount = calculateTotalAmount();
+// const totalAmount = calculateTotalAmount();
 
 
 // Check if user is null and handle it appropriately
@@ -139,19 +169,22 @@ return (
 
         <div className="order-summary">
             <h2>Your Cart</h2>
+            {bookingDetails.checkInDate && bookingDetails.checkOutDate ? (
             <ul>
-            {cartItems.map((item, index) => (
-              <li key={index}>
+              {cartItems.map((item, index) => (
+                <li key={index}>
                   {item.name} - {item.price}
                   <div><strong>Adults:</strong> {bookingDetails.adults}</div>
-                <div><strong>Children:</strong> {bookingDetails.children}</div>
-                <div><strong>Rooms:</strong> {bookingDetails.rooms}</div>
-                <div><strong>Check-In:</strong> {new Date(bookingDetails.checkInDate).toLocaleDateString()}</div>
-                <div><strong>Check-Out:</strong> {new Date(bookingDetails.checkOutDate).toLocaleDateString()}</div>
-              </li>
-          ))}
-            
+                  <div><strong>Children:</strong> {bookingDetails.children}</div>
+                  <div><strong>Rooms:</strong> {bookingDetails.rooms}</div>
+                  <div><strong>Check-In:</strong> {new Date(bookingDetails.checkInDate).toLocaleDateString()}</div>
+                  <div><strong>Check-Out:</strong> {new Date(bookingDetails.checkOutDate).toLocaleDateString()}</div>
+                </li>
+              ))}
             </ul>
+          ) : (
+            <p>Please complete your booking details to see the order summary.</p>
+          )}
             <div className="total">
             <p>Total: R {totalAmount}</p>
             </div>
