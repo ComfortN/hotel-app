@@ -1,0 +1,55 @@
+.policy-container {
+    background-color: #2f343b;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0
+}
+
+.policy-nav {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.policy-nav button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease;
+}
+
+.policy-nav button:hover {
+    background-color: #ddd;
+}
+
+.policy-nav button.active {
+    background-color: black;
+    color: white;
+}
+
+.policy-content {
+    background-color: #2b2d2f;
+    justify-content: center;
+    align-self: center;
+    width: 80% ;
+    padding: 20px;
+    color: white;
+
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-top: 20px;
+    
+}
+
+p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}

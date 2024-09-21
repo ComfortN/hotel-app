@@ -41,8 +41,8 @@ export default function Footer() {
         <div class="footer-bottom">
             <p>&copy; 2024 Luxe Stay Hotel. All rights reserved.</p>
             <ul class="footer-terms">
-                <li>Privacy Policy</li>
-                <li>Terms of Service</li>
+            <li><Link to="/policy">Privacy Policy</Link></li>
+            <li><Link to="/policy">Terms of Service</Link></li>
             </ul>
         </div>
     </footer>

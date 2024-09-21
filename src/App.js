@@ -13,6 +13,7 @@ import AboutUs from './Components/aboutUs/AboutUs';
 import ProfilePage from './Components/profilePage/ProfilePage';
 import Gallery from './Components/gallery/Gallery';
 import ReviewForm from './Components/reviews/ReviewForm';
+import PolicyPage from './Components/policies/PolicyPage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path='/profile-page' element={<ProfilePage />} />
         <Route path='gallery' element={<Gallery />} />
         <Route path="/review/:bookingId" element={<ReviewForm />} />
+        <Route path="/policy" element={<PolicyPage />} />
       </Routes>
     </Router>
     
