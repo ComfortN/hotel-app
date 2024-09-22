@@ -6,6 +6,7 @@ import { addBooking } from '../../redux/bookingSlice';
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
 import { database } from '../../firebase/firebase';
+import { sendBookingConfirmationEmail } from '../../mailtrap/BookingController';
 
 const stripePromise = loadStripe('pk_test_51PvYukIcyHoH5Xszeca5rNyDU2CaCnzOvKWagl1z2t3WWx5Y7MyclGyGTE0H0fHNPfbYv0EWnbsOJV4HiRWBhr1100gBUhPmUu');
 
@@ -42,6 +43,8 @@ function CheckoutForm({ bookingDetails }) {
                 const receiptId = docRef.id;
 
                 dispatch(addBooking({ ...bookingData, id: receiptId }));
+
+                await sendBookingConfirmationEmail(bookingData);
 
                 navigate(`/payment-success/${receiptId}`);
             } catch (error) {
