@@ -69,14 +69,42 @@ The LuxeStay Hotel App is a comprehensive solution for managing hotel accommodat
         npm start
     ```
 
+### Backend
+
+1. Navigate to the backend directory:
+
+```
+    cd backend
+```
+
+2. Install backend dependencies:
+
+```
+    npm install
+```
+
+4. Start the backend server:
+
+```
+    node server.js
+```
+
+The server will run on `http://localhost:8888` by default.
 
 ## Technologies Used
 
 * Frontend: React, Redux, React-icons
-* Backend: Firebase Firestore, Firebase Authentication
+* Backend: Express.js, Node.js
+* Database: Firebase Firestore, Firebase Authentication
 * Payments: (Stripe)
 * State Management: Redux
 * Routing: React Router
+* Email Testing: Mailtrap
+
+
+## API Endpoints
+
+- POST `/api/send-email`: Sends a booking confirmation email
 
 
 ## UI/UX Designs

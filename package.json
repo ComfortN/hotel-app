@@ -20,6 +20,7 @@
     "file-saver": "^2.0.5",
     "firebase": "^10.13.0",
     "hotel-app": "file:",
+    "nodemailer": "^6.9.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-firebase-hooks": "^5.1.1",
@@ -35,7 +36,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "backend": "cd ./backend && node server.js",
+    "dev": "concurrently \"npm start\" \"npm run backend\""
   },
   "eslintConfig": {
     "extends": [
@@ -54,5 +57,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
   }
 }
