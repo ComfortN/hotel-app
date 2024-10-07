@@ -4,6 +4,7 @@ import Banner from '../baner/Banner';
 import Footer from '../foooter/Footer';
 import { fetchGalleryImagesAsync } from '../../redux/gallerySlice';
 import '../../styles/Gallery.css';
+import Loader from '../loader/Loader';
 
 export default function Gallery() {
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ export default function Gallery() {
         dispatch(fetchGalleryImagesAsync());
     }, [dispatch]);
 
-    if (status === 'loading') return <p>Loading...</p>;
+    if (status === 'loading') return <Loader />;
     if (status === 'failed') return <p>Error: {error}</p>;
     return (
         <div className="gallery-page">

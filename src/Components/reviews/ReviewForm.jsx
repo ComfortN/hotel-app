@@ -7,6 +7,8 @@ import { database, auth } from '../../firebase/firebase';
 import { FaStar } from 'react-icons/fa';
 import '../../styles/ReviewForm.css';
 import { getUserFromFirestore } from '../../firebase/firestoreUtils';
+import Loader from '../loader/Loader';
+import Alert from '../alert/Alert';
 
 
 export default function ReviewForm() {
@@ -15,6 +17,8 @@ export default function ReviewForm() {
     const dispatch = useDispatch();
     const [user, setUser] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [alert, setAlert] = useState({ show: false, type: '', message: '' });
     const navigate = useNavigate();
 
     // Initialize review state with empty values
@@ -25,8 +29,8 @@ export default function ReviewForm() {
     });
 
     useEffect(() => {
-        // Fetch user data from Firestore
         const fetchUser = async () => {
+            setIsLoading(true);
             const currentUser = auth.currentUser;
             if (currentUser) {
                 try {
@@ -34,10 +38,12 @@ export default function ReviewForm() {
                     setUser(userData);
                 } catch (error) {
                     console.error('Error fetching user:', error);
+                    setAlert({ show: true, type: 'error', message: 'Failed to fetch user data. Please try again.' });
                 }
             }
+            setIsLoading(false);
         };
-
+    
         fetchUser();
     }, []);
 
@@ -58,19 +64,27 @@ export default function ReviewForm() {
     };
 
 
+    useEffect(() => {
+        if (alert.show) {
+            const timer = setTimeout(() => {
+                setAlert({ show: false, type: '', message: '' });
+            }, 3000);
+    
+            return () => clearTimeout(timer);
+        }
+    }, [alert.show]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitting(true);  // Disable button during submission
+        setIsSubmitting(true);
+        setIsLoading(true);
     
         if (user) {
             try {
                 if (review.id) {
-                    // Update existing review
                     await dispatch(updateReview({ ...review, updatedAt: new Date() })).unwrap();
-                    navigate('/profile-page');
+                    setAlert({ show: true, type: 'success', message: 'Review updated successfully!' });
                 } else {
-                    // Add new review
                     const reviewData = {
                         bookingId,
                         userId: user.id,
@@ -79,47 +93,61 @@ export default function ReviewForm() {
                         createdAt: new Date()
                     };
                     await dispatch(addReview(reviewData)).unwrap();
-                    navigate('/profile-page');
+                    setAlert({ show: true, type: 'success', message: 'Review submitted successfully!' });
                 }
+                setTimeout(() => navigate('/profile-page'), 3000);
             } catch (error) {
                 console.error('Error submitting review:', error);
+                setAlert({ show: true, type: 'error', message: 'Failed to submit review. Please try again.' });
             } finally {
-                setIsSubmitting(false);  // Re-enable button after submission
+                setIsSubmitting(false);
+                setIsLoading(false);
             }
         } else {
             console.error('User data is not available');
+            setAlert({ show: true, type: 'error', message: 'User data is not available. Please try again.' });
             setIsSubmitting(false);
+            setIsLoading(false);
         }
     };
 
     console.log(review)
 
     return (
-        <div className="review-form">
-            <h2>{review.id ? 'Edit Review' : 'Write a Review'}</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Review Name:
-                    <input type="text" name="name" value={review.name} onChange={handleInputChange} required />
-                </label>
-                <label>
-                    Review Text:
-                    <textarea name="text" value={review.text} onChange={handleInputChange} required />
-                </label>
-                <label>
-                    Rating:
-                    <div className="stars-container">
-                        {[1, 2, 3, 4, 5].map(rating => (
-                            <FaStar
-                                key={rating}
-                                className={`star ${rating <= review.rating ? 'filled' : ''}`}
-                                onClick={() => handleRatingChange(rating)}
-                            />
-                        ))}
-                    </div>
-                </label>
-                <button type="submit" disabled={!user || isSubmitting}>Submit Review</button>
-            </form>
+        <div className="review-form-container">
+            {isLoading ? (
+                <Loader />
+            ) : (
+                <div className="review-form">
+                    {alert.show && <Alert type={alert.type} message={alert.message} />}
+                    <h2>{review.id ? 'Edit Review' : 'Write a Review'}</h2>
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            Review Name:
+                            <input type="text" name="name" value={review.name} onChange={handleInputChange} required />
+                        </label>
+                        <label>
+                            Review Text:
+                            <textarea name="text" value={review.text} onChange={handleInputChange} required />
+                        </label>
+                        <label>
+                            Rating:
+                            <div className="stars-container">
+                                {[1, 2, 3, 4, 5].map(rating => (
+                                    <FaStar
+                                        key={rating}
+                                        className={`star ${rating <= review.rating ? 'filled' : ''}`}
+                                        onClick={() => handleRatingChange(rating)}
+                                    />
+                                ))}
+                            </div>
+                        </label>
+                        <button type="submit" disabled={!user || isSubmitting}>
+                            {isSubmitting ? 'Submitting...' : 'Submit Review'}
+                        </button>
+                    </form>
+                </div>
+            )}
         </div>
     );
 }

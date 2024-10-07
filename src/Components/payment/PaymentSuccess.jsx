@@ -75,14 +75,16 @@ const PaymentSuccess = () => {
     return (
         <div className="payment-success-page">
             <div className="payment-success-container">
-                <FaCheckCircle className="success-icon" />
+                <div className="icon-container">
+                    <FaCheckCircle className="success-icon" />
+                </div>
                 <h2>Payment Successful</h2>
-                <p className="amount">Amount: {amount}</p>
+                <p className="amount">Amount: R{amount}</p>
                 <div className="payment-receipt">
                     <h3>Payment Receipt</h3>
                     <div className="receipt-details">
                         <div className="room-details">
-                            <p>Room Details:</p>
+                            <p>Room Details</p>
                             <p>Name: {firstName} {lastName}</p>
                             <p>Email: {email}</p>
                         </div>
@@ -90,8 +92,8 @@ const PaymentSuccess = () => {
                             <p>Dates:</p>
                             <p>{checkInDate}</p>
                             <p>{checkOutDate}</p>
-                            <p>Amount:</p>
-                            <p>{amount}</p>
+                            <p>Amount: R{amount}</p>
+                            
                         </div>
                         <div className="payment-method">
                             <p>Payment Method:</p>

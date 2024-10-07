@@ -9,6 +9,8 @@ import { fetchBookings, fetchReviews, deleteReview, updateReview } from '../../r
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import BookingCard from './BookingCard';
 import { FaEdit, FaTrashAlt, FaStar } from 'react-icons/fa';
+import Loader from '../loader/Loader';
+import Alert from '../alert/Alert';
 
 
 const getFavoritesFromLocalStorage = () => {
@@ -21,6 +23,8 @@ export default function ProfilePage() {
     const bookings = useSelector((state) => state.booking.bookings || {});
     const reviews = useSelector((state) => state.booking.reviews || []);
     const { user } = useSelector((state) => state.user);
+    const [isLoading, setIsLoading] = useState(true);
+    const [alert, setAlert] = useState({ show: false, type: '', message: '' });
 
 
     const [isEditing, setIsEditing] = useState(false);
@@ -38,13 +42,14 @@ export default function ProfilePage() {
 
     useEffect(() => {
         if (!user) {
-          navigate('/signin',{ state: { from: location } });
+            navigate('/signin',{ state: { from: location } });
         }
-      }, [user, navigate]);
+    }, [user, navigate]);
 
 
     useEffect(() => {
         const fetchUserData = async () => {
+            setIsLoading(true);
             try {
                 const currentUser = auth.currentUser;
                 console.log(currentUser)
@@ -67,6 +72,8 @@ export default function ProfilePage() {
                 }
             } catch (error) {
                 console.error("Error fetching user data: ", error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -91,6 +98,17 @@ export default function ProfilePage() {
         return new Date(dateString).toLocaleDateString();
     };
 
+
+    useEffect(() => {
+        if (alert.show) {
+            const timer = setTimeout(() => {
+                setAlert({ show: false, type: '', message: '' });
+            }, 2000);
+    
+            return () => clearTimeout(timer);
+        }
+    }, [alert.show]);
+
     const handleSaveClick = async () => {
         setIsEditing(false);
         try {
@@ -98,10 +116,11 @@ export default function ProfilePage() {
             const currentUser = auth.currentUser;
             if (currentUser) {
                 await updateUserInFirestore(currentUser.uid, userData);
-                
+                setAlert({ show: true, type: 'success', message: 'Profile updated successfully!' });
             }
         } catch (error) {
             console.error("Error updating user data: ", error);
+            setAlert({ show: true, type: 'error', message: 'Failed to update profile. Please try again.' });
         }
     };
 
@@ -114,16 +133,22 @@ export default function ProfilePage() {
 
     const handleDeleteReview = (reviewId) => {
         dispatch(deleteReview(reviewId));
+        setAlert({ show: true, type: 'info', message: 'Review deleted successfully.' });
     };
 
     const handleEditReview = (review) => {
         navigate(`/review/${review.id}`, { state: { review } });
+        setAlert({ show: true, type: 'info', message: 'Editing review...' });
     };
 
     return (
         <div className='profile-page'>
             <Navbar />
+            {isLoading ? (
+            <Loader />
+        ) : (
             <div className="profile-page-container">
+                {alert.show && <Alert type={alert.type} message={alert.message} />}
                 <div className="profile-header">
                     <h1>My Profile</h1>
                     {isEditing ? (
@@ -236,6 +261,7 @@ export default function ProfilePage() {
                     </div>
                 </div>
             </div>
+        )}
             <Footer />
         </div>
     );

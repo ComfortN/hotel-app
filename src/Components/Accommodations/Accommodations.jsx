@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '../../styles/Accommodations.css';
 import Banner from '../baner/Banner';
@@ -11,12 +11,14 @@ import { fetchFavorites, addFavorite, removeFavorite, syncFavoritesToFirestore }
 import { fetchAccommodationsAsync } from '../../redux/accommodationSlice';
 import { getAuth } from 'firebase/auth';
 import { addToCart } from '../../redux/cartSlice';
+import Loader from '../loader/Loader';
 
 
 
 export default function Accommodations() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
     const { favorites, status: favoritesStatus, error: favoritesError } = useSelector((state) => state.favorites);
     const {accommodations, status: accommodationsStatus, error: accommodationsError } = useSelector((status) => status.accommodations);
     const auth = getAuth();
@@ -41,6 +43,8 @@ export default function Accommodations() {
     //Fetch accommodations from Firestore
     useEffect(() => {
         dispatch(fetchAccommodationsAsync());
+        const timer = setTimeout(() => setLoading(false), 3000);
+        return () => clearTimeout(timer);
     }, [dispatch]);
 
 
@@ -85,7 +89,7 @@ export default function Accommodations() {
         }
     };
 
-    if (accommodationsStatus === 'loading') return <p>Loading...</p>;
+    if (loading || accommodationsStatus === 'loading') return <Loader />;
     if (accommodationsStatus === 'failed') return <p>Error: {accommodationsError}</p>
 
     
