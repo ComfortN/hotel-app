@@ -40,13 +40,13 @@ function CheckoutForm({ bookingDetails }) {
 
             try {
                 const docRef = await addDoc(collection(database, 'receipts'), bookingData);
-                const receiptId = docRef.id;
+                const bookingID = docRef.id;
 
-                dispatch(addBooking({ ...bookingData, id: receiptId }));
+                dispatch(addBooking({ ...bookingData, bookingID }));
 
                 await sendBookingConfirmationEmail(bookingData);
 
-                navigate(`/payment-success/${receiptId}`);
+                navigate(`/payment-success/${bookingID}`);
             } catch (error) {
                 console.error('Error saving booking data:', error);
             }
