@@ -70,17 +70,16 @@ export const addBooking = createAsyncThunk(
   'bookings/addBooking',
   async (booking) => {
     try {
-      // Save the entire booking details to Firestore
       const docRef = await addDoc(collection(database, 'bookings'), booking);
       await addDoc(collection(database, 'receipts'), {
-        bookingId: docRef.id,
+        bookingID: docRef.id,
         userId: booking.userId,
         amount: booking.amount,
         createdAt: new Date(),
       });
-      return { id: docRef.id, ...booking }; // Return the full booking object with id
+      return { bookingID: docRef.id, ...booking };
     } catch (error) {
-      throw new Error(error.message); // Handle any errors
+      throw new Error(error.message);
     }
   }
 );

@@ -8,12 +8,14 @@ import {createBooking} from '../../redux/bookingSlice'
 import StripeCheckout from 'react-stripe-checkout';
 import StripePayment from './CheckoutForm';
 import BookingForm from '../bookingForm/BookingForm';
+import Loader from '../loader/Loader';
 
 
 export default function Checkout() {
   const { cartItems, bookingDetails } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const [customerDetails, setCustomerDetails] = useState({
     firstName: '',
@@ -44,8 +46,12 @@ export default function Checkout() {
 
 
   useEffect(() => {
+    setLoading(true);
     const calculatedTotal = calculateTotalAmount();
     setTotalAmount(calculatedTotal);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
     console.log('Calculated Total:', calculatedTotal);
   }, [bookingDetails]);
 
@@ -122,6 +128,12 @@ const bookingDetailsWithUserId = {
   totalAmount,
   userId: user.uid
 };
+
+
+
+if (loading) {
+  return <Loader />;
+}
 
 
 return (
