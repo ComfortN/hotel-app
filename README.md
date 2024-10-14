@@ -37,6 +37,9 @@ The LuxeStay Hotel App is a comprehensive solution for managing hotel accommodat
 ### Data Storage
 - **Backend**: Firebase Firestore/Real-time for storing accommodation listings, user data, booking information, etc.
 
+- **Backend**: Node.js a server to send emails using nodemailer
+
+  
 ### State Management
 - **Redux**: Manage application state.
 
