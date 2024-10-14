@@ -4,22 +4,33 @@ export const sendBookingConfirmationEmail = async (bookingDetails) => {
   const emailData = {
     to: bookingDetails.email,
     subject: 'Booking Confirmation',
-    text: `Thank you for your booking!
+    text: `Dear ${bookingDetails.firstName} ${bookingDetails.lastName},
+    
+    Thank you for your booking!
     
     Booking Details:
-    Date: ${bookingDetails.date}
-    Time: ${bookingDetails.time}
-    Amount: $${bookingDetails.amount}
+      Check-in: ${bookingDetails.checkInDate}
+      Check-out: ${bookingDetails.checkOutDate}
+      Amount: R${bookingDetails.amount}
+      Accommodation: ${bookingDetails.name}
     
-    We look forward to seeing you!`,
-    html: `<h1>Thank you for your booking!</h1>
+    We'll be in touch regarding the status of your booking.
+    
+    Best regards,
+    LuxeStay Hote;`,
+    
+    html: `<h1>Dear ${bookingDetails.firstName} ${bookingDetails.lastName},</h1>
+    <p>Thank you for your booking!</p>
     <p><strong>Booking Details:</strong></p>
     <ul>
-      <li>Date: ${bookingDetails.date}</li>
-      <li>Time: ${bookingDetails.time}</li>
-      <li>Amount: $${bookingDetails.amount}</li>
+      <li>Check-in: ${bookingDetails.checkInDate}</li>
+      <li>Check-out: ${bookingDetails.checkOutDate}</li>
+      <li>Amount: R${bookingDetails.amount}</li>
+      <li>Accommodation: ${bookingDetails.name}</li>
     </ul>
-    <p>We look forward to seeing you!</p>`
+    <p>We'll be in touch regarding the status of your booking.</p>
+    <p>Best regards,</p>
+    <p>LuxeStay Hotel</p>`
   };
 
   try {
@@ -43,9 +54,3 @@ export const sendBookingConfirmationEmail = async (bookingDetails) => {
     throw error;
   }
 };
-
-
-// allow create: if request.auth != null &&
-//               request.resource.data.userId == request.auth.uid &&
-//               request.resource.data.amount is number &&
-//               request.resource.data.createdAt is timestamp;

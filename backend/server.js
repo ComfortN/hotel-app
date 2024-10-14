@@ -7,20 +7,29 @@ app.use(cors());
 app.use(express.json());
 
 // Config Mailtrap SMTP
+// const transporter = nodemailer.createTransport({
+//     host: 'live.smtp.mailtrap.io',  // From Mailtrap SMTP settings
+//     port: 587,
+//     auth: {
+//       user: 'api',
+//       pass: 'c12f1929b274a9a0629fbee850906e21',
+//     },
+//   });
+
+
 const transporter = nodemailer.createTransport({
-    host: 'live.smtp.mailtrap.io',  // From Mailtrap SMTP settings
-    port: 587,
-    auth: {
-      user: 'api',
-      pass: 'c12f1929b274a9a0629fbee850906e21',
-    },
-  });
+  service: 'gmail',
+  auth: {
+    user: 'luxestayhotel@gmail.com',
+    pass: 'brns ccsd jmqg mzrg'
+  }
+});
 
 app.post('/api/send-email', async (req, res) => {
   const { to, subject, text, html } = req.body;
 
   const mailOptions = {
-    from: '"LuxeStay Hotel" <luxestay@demomailtrap.com>',
+    from: 'luxestayhotel@gmail.com',
     to, subject, text, html
   };
 
